@@ -35,7 +35,7 @@ export default function Services({ onOpenBooking }) {
   ];
 
   return (
-    <section id="services" className="py-24 bg-brand-bg relative">
+    <section id="services" className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -61,7 +61,7 @@ export default function Services({ onOpenBooking }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative flex flex-col justify-between p-8 rounded-3xl bg-white border border-emerald-900/5 hover:border-accent/40 shadow-sm hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px]"
+                className="group relative flex flex-col justify-between p-8 rounded-3xl water-glass hover:border-accent/40 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5"
               >
                 {/* Accent Background Gradient Glow */}
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -69,7 +69,7 @@ export default function Services({ onOpenBooking }) {
                 <div className="space-y-6 relative z-10">
                   {/* Icon and Highlight */}
                   <div className="flex justify-between items-start">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 group-hover:bg-primary text-secondary group-hover:text-accent flex items-center justify-center transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-2xl bg-white/40 border border-white/30 group-hover:bg-primary text-secondary group-hover:text-accent flex items-center justify-center transition-colors duration-300 backdrop-blur-sm">
                       <IconComponent className="w-6 h-6" />
                     </div>
                     <span className="text-[10px] font-bold text-emerald-900/40 group-hover:text-emerald-900/60 uppercase tracking-wider">

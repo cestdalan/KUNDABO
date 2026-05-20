@@ -25,8 +25,8 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=2000&q=80"
-          alt="Premium fresh green and white florist flowers"
+          src="/garden_path.jpg"
+          alt="Premium winding garden pathway"
           className="w-full h-full object-cover object-center scale-105 select-none"
         />
         {/* Soft, rich gradient overlay using theme emerald/green colors */}
@@ -137,20 +137,19 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
             transition={{ duration: 1, delay: 0.8 }}
             className="absolute bottom-4 md:bottom-8 left-8 md:left-24 lg:left-8 xl:left-20 z-10 w-48 p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-2xl flex items-center gap-3 animate-float-fast text-left"
           >
-            <div className="w-10 h-10 rounded-xl bg-sky-400/20 flex items-center justify-center text-sky-300 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center text-accent shrink-0">
               <Leaf className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-[10px] text-sky-300/80 font-bold uppercase tracking-wider">Houseplants</p>
-              <h4 className="text-white text-sm font-semibold mt-0.5">Rare Monsteras</h4>
+              <p className="text-[10px] text-accent/80 font-bold uppercase tracking-wider">Houseplants</p>
+              <h4 className="text-white text-sm font-semibold mt-0.5">Peace Lilies</h4>
               <p className="text-accent-light text-xs font-medium mt-0.5">Best Seller • $45</p>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Earthy accent line divider */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-brand-bg to-transparent pointer-events-none z-10" />
+
     </section>
   );
 }

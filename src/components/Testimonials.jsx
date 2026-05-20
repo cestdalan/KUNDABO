@@ -23,7 +23,7 @@ const TESTIMONIALS = [
     avatar: 'https://images.unsplash.com/photo-1533604140514-f6f7b60d9c4c?auto=format&fit=crop&w=150&h=150&q=80',
     quote: "The flower bed curation service was worth every penny. My front yard went from bare soil to a lush, colorful tulip oasis that blooms beautifully every season.",
     type: 'you',
-    logoBg: 'bg-blue-600',
+    logoBg: 'bg-secondary',
     logoText: 'YOU',
     rating: 5,
   },
@@ -101,7 +101,7 @@ export default function Testimonials() {
   });
 
   return (
-    <section id="testimonials" ref={containerRef} className="py-24 bg-white relative overflow-hidden text-left">
+    <section id="testimonials" ref={containerRef} className="py-24 bg-transparent relative overflow-hidden text-left">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
@@ -116,8 +116,8 @@ export default function Testimonials() {
         {/* Wavy Slider Track */}
         <div className="relative h-[240px] w-full mt-8 overflow-hidden select-none">
           {/* Static highlight zone double-rings on the left */}
-          <div className="absolute left-[10%] md:left-[15%] top-[120px] -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full border border-blue-500/20 pointer-events-none flex items-center justify-center">
-            <div className="w-24 h-24 rounded-full border-2 border-blue-500/40" />
+          <div className="absolute left-[10%] md:left-[15%] top-[120px] -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full border border-accent/25 pointer-events-none flex items-center justify-center">
+            <div className="w-24 h-24 rounded-full border-2 border-accent/40" />
           </div>
 
           {/* Sliding Track Container */}
@@ -168,19 +168,19 @@ export default function Testimonials() {
                   <div
                     className={`relative rounded-full flex items-center justify-center transition-all duration-500 cursor-pointer ${
                       isActive 
-                        ? 'w-24 h-24 shadow-xl shadow-blue-500/20 z-20 scale-110 animate-none' 
+                        ? 'w-24 h-24 shadow-xl shadow-accent/25 z-20 scale-110 animate-none' 
                         : 'w-16 h-16 opacity-65 scale-90 animate-none'
                     }`}
                     onClick={() => setActiveIndex(node.id)}
                   >
                     {/* Active Double Ring Border */}
                     {isActive && (
-                      <div className="absolute -inset-2.5 rounded-full border-2 border-blue-500 animate-pulse pointer-events-none" />
+                      <div className="absolute -inset-2.5 rounded-full border-2 border-accent animate-pulse pointer-events-none" />
                     )}
 
                     {/* Node styling depending on type */}
                     {node.type === 'you' ? (
-                      <div className="w-full h-full rounded-full bg-blue-600 border-[3px] border-white text-white font-heading text-sm font-extrabold flex items-center justify-center shadow-lg">
+                      <div className="w-full h-full rounded-full bg-secondary border-[3px] border-white text-white font-heading text-sm font-extrabold flex items-center justify-center shadow-lg">
                         {node.logoText}
                       </div>
                     ) : node.type === 'logo' ? (
@@ -209,7 +209,7 @@ export default function Testimonials() {
         </div>
 
         {/* Active Testimonial Message Container */}
-        <div className="mt-8 max-w-3xl mx-auto bg-emerald-50/20 border border-emerald-900/5 backdrop-blur-md rounded-3xl p-8 md:p-10 shadow-sm relative z-10 min-h-[220px] flex flex-col justify-between">
+        <div className="mt-8 max-w-3xl mx-auto water-glass rounded-3xl p-8 md:p-10 shadow-sm relative z-10 min-h-[220px] flex flex-col justify-between">
           <div className="absolute top-6 right-8 text-emerald-950/5 pointer-events-none">
             <Quote className="w-16 h-16 rotate-180 fill-current" />
           </div>

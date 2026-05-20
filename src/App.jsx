@@ -21,7 +21,7 @@ export default function App() {
   const handleCloseBooking = () => setIsBookingOpen(false);
 
   return (
-    <div className="min-h-screen bg-brand-bg font-sans selection:bg-accent/30 selection:text-emerald-950">
+    <div className="min-h-screen bg-transparent font-sans selection:bg-accent/30 selection:text-emerald-950">
       {/* Navigation */}
       <Navbar onOpenBooking={handleOpenBooking} view={view} setView={setView} />
 

@@ -69,7 +69,7 @@ export default function BeforeAfter() {
   }, []);
 
   return (
-    <section id="portfolio" className="py-24 bg-brand-bg relative">
+    <section id="portfolio" className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -85,7 +85,7 @@ export default function BeforeAfter() {
         </div>
 
         {/* Interactive Comparison Slider */}
-        <div className="max-w-4xl mx-auto rounded-3xl overflow-hidden border border-emerald-900/5 bg-white p-4 shadow-xl mb-20">
+        <div className="max-w-4xl mx-auto rounded-3xl overflow-hidden water-glass p-4 shadow-xl mb-20">
           <div
             ref={containerRef}
             onMouseMove={handleMouseMove}
@@ -93,20 +93,20 @@ export default function BeforeAfter() {
             className="relative h-[320px] sm:h-[450px] w-full rounded-2xl overflow-hidden cursor-ew-resize select-none no-select"
           >
             {/* Before Image (Bottom) */}
-            <div className="absolute inset-0 w-full h-full">
+            <div className="absolute inset-0 w-full h-full z-0">
               <img
                 src="https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=1200&q=80"
                 alt="Before decoration: Dry and faded flower stems"
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
-              <span className="absolute bottom-4 left-4 z-10 px-3.5 py-1.5 rounded-xl bg-red-950/70 backdrop-blur-md text-[10px] font-bold text-red-200 border border-red-800/10 uppercase tracking-widest">
+              <span className="absolute bottom-4 right-4 px-3.5 py-1.5 rounded-xl bg-emerald-950/65 backdrop-blur-md text-[10px] font-bold text-emerald-200/70 border border-emerald-800/10 uppercase tracking-widest pointer-events-none select-none">
                 Before Decoration
               </span>
             </div>
 
             {/* After Image (Top - Clipped by width) */}
             <div
-              className="absolute inset-0 w-full h-full overflow-hidden"
+              className="absolute inset-0 h-full overflow-hidden z-10"
               style={{ width: `${sliderPosition}%` }}
             >
               {/* Force the inner image to remain full-width relative to the outer container */}
@@ -117,7 +117,7 @@ export default function BeforeAfter() {
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               </div>
-              <span className="absolute bottom-4 right-4 z-10 px-3.5 py-1.5 rounded-xl bg-primary/70 backdrop-blur-md text-[10px] font-bold text-accent border border-emerald-800/10 uppercase tracking-widest">
+              <span className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-xl bg-primary/70 backdrop-blur-md text-[10px] font-bold text-accent border border-emerald-800/10 uppercase tracking-widest pointer-events-none select-none">
                 After Styling
               </span>
             </div>

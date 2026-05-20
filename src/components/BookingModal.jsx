@@ -53,7 +53,7 @@ export default function BookingModal({ isOpen, onClose }) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-              className="w-screen max-w-md bg-white shadow-2xl border-l border-emerald-900/5 flex flex-col h-full"
+              className="w-screen max-w-md water-glass-drawer flex flex-col h-full"
             >
               {/* Header branding band */}
               <div className="bg-gradient-to-r from-primary to-secondary p-6 text-white flex justify-between items-center shrink-0">

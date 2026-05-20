@@ -253,58 +253,73 @@ export default function ShopPage({ onBackToHome }) {
   }, [searchQuery, selectedCategory, selectedCollection, selectedFlowerType, sortBy]);
 
   return (
-    <div className="py-28 bg-brand-bg min-h-screen text-left">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        {/* Back navigation */}
-        <button
-          onClick={onBackToHome}
-          className="inline-flex items-center gap-2 mb-6 text-sm font-semibold text-secondary hover:text-primary transition-colors focus:outline-none group cursor-pointer"
-        >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          <span>Back to Home</span>
-        </button>
+    <div className="bg-transparent min-h-screen text-left pb-28">
+      {/* Shop Banner Top Section / Hero Section */}
+      <div className="relative min-h-[45vh] flex items-center justify-center overflow-hidden py-24">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/shop_header.jpg"
+            alt="Verdant Shop Hero Banner"
+            className="w-full h-full object-cover object-center scale-105 select-none"
+          />
+          {/* Soft, rich gradient overlay using theme primary/green colors */}
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/80 to-primary/50" />
+        </div>
 
-        {/* 🔍 Search Bar (First on the Page!) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full space-y-6">
+          {/* Back navigation */}
+          <button
+            onClick={onBackToHome}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-light transition-colors focus:outline-none group cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <span>Back to Home</span>
+          </button>
+
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest bg-white/10 border border-white/15 px-3 py-1.5 rounded-full inline-block backdrop-blur-md">
+                Verdant Shop
+              </span>
+              <h1 className="font-heading text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Boutique Collection
+              </h1>
+              <p className="font-sans text-sm sm:text-base text-emerald-100/80 font-light max-w-xl">
+                Browse our fresh blooms, seasonal bouquets, handpicked houseplants, ceramic pots, and artisan garden decorations.
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-2.5 bg-white/10 border border-white/15 px-4 py-2.5 rounded-xl shadow-lg self-start md:self-auto min-w-[200px] backdrop-blur-md">
+              <SlidersHorizontal className="w-4 h-4 text-emerald-200" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="text-xs font-semibold text-white bg-transparent outline-none w-full cursor-pointer"
+              >
+                <option value="featured" className="text-emerald-950">Sort by: Featured</option>
+                <option value="price-low" className="text-emerald-950">Price: Low to High</option>
+                <option value="price-high" className="text-emerald-950">Price: High to Low</option>
+                <option value="rating" className="text-emerald-950">Top Rated</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12">
+        
+        {/* 🔍 Search Bar (First on the remaining area of the page!) */}
         <div className="relative w-full mb-10">
           <input
             type="text"
-            placeholder="Search flowers, plants, vases, tools, occasions..."
+            placeholder="Search flowers, plants, vases, occasions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4.5 rounded-2xl bg-white border border-emerald-900/10 shadow-md text-base font-sans focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-emerald-950 placeholder-emerald-900/30 transition-all"
+            className="w-full pl-12 pr-4 py-4.5 rounded-2xl water-glass-input shadow-md text-base font-sans focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 text-white placeholder-emerald-100/35 transition-all"
           />
-          <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 w-5.5 h-5.5 text-emerald-900/30" />
-        </div>
-
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-          <div className="space-y-3">
-            <span className="text-xs font-bold text-secondary uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full inline-block">
-              Verdant Shop
-            </span>
-            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-950 tracking-tight">
-              Boutique Collection
-            </h1>
-            <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light max-w-xl">
-              Browse our fresh blooms, seasonal bouquets, handpicked houseplants, ceramic pots, and artisan garden decorations.
-            </p>
-          </div>
-          
-          {/* Sorting Dropdown */}
-          <div className="flex items-center gap-2.5 bg-white border border-emerald-900/5 px-4 py-2.5 rounded-xl shadow-sm self-start md:self-auto min-w-[200px]">
-            <SlidersHorizontal className="w-4 h-4 text-emerald-900/40" />
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="text-xs font-semibold text-emerald-950 bg-transparent outline-none w-full cursor-pointer"
-            >
-              <option value="featured">Sort by: Featured</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="rating">Top Rated</option>
-            </select>
-          </div>
+          <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 w-5.5 h-5.5 text-emerald-200/35" />
         </div>
 
         {/* Filter Controls (Categories, Collections & Flowers Sub-types) */}
@@ -326,7 +341,7 @@ export default function ShopPage({ onBackToHome }) {
                   className={`px-5 py-3 rounded-2xl text-xs font-semibold tracking-wide whitespace-nowrap transition-all focus:outline-none cursor-pointer ${
                     selectedCategory === cat
                       ? 'bg-primary text-white shadow-md shadow-primary/10'
-                      : 'bg-white text-emerald-900/60 hover:text-primary border border-emerald-900/5 shadow-sm'
+                      : 'water-glass text-emerald-900/60 hover:text-primary shadow-sm'
                   }`}
                 >
                   {cat}
@@ -336,7 +351,7 @@ export default function ShopPage({ onBackToHome }) {
           </div>
 
           {/* Occasions / Collections Row */}
-          <div className="bg-white/50 border border-emerald-900/5 rounded-3xl p-5 shadow-sm space-y-3">
+          <div className="water-glass rounded-3xl p-5 shadow-sm space-y-3">
             <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest">
               Filter by Collection / Occasion
             </h3>
@@ -348,7 +363,7 @@ export default function ShopPage({ onBackToHome }) {
                   className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all focus:outline-none cursor-pointer ${
                     selectedCollection === col
                       ? 'bg-emerald-950 text-white shadow-sm'
-                      : 'bg-white text-emerald-900/60 hover:text-emerald-950 border border-emerald-900/5 shadow-sm'
+                      : 'bg-white/60 hover:text-emerald-950 border border-white/40 shadow-sm backdrop-blur-sm'
                   }`}
                 >
                   {col === 'All' ? '🌸 All Occasions' : col === 'Birthday' ? '🎂 Birthday' : col === 'Wedding' ? '💍 Wedding' : col === 'Funeral' ? '🕊️ Funeral & Sympathy' : '🏡 Garden & Patio'}
@@ -359,7 +374,7 @@ export default function ShopPage({ onBackToHome }) {
 
           {/* Flowers subcategories / "Types of Flowers" (Visible when category is All or Flowers) */}
           {(selectedCategory === 'All' || selectedCategory === 'Flowers') && (
-            <div className="bg-white/70 border border-emerald-900/5 rounded-3xl p-5 shadow-sm">
+            <div className="water-glass rounded-3xl p-5 shadow-sm">
               <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest mb-3">
                 Types of Flowers
               </h3>
@@ -371,7 +386,7 @@ export default function ShopPage({ onBackToHome }) {
                     className={`px-4 py-2 rounded-xl text-xs font-medium transition-all focus:outline-none cursor-pointer ${
                       selectedFlowerType === type
                         ? 'bg-secondary text-white shadow-sm'
-                        : 'bg-emerald-50 text-emerald-900/60 hover:bg-emerald-100'
+                        : 'bg-white/60 hover:bg-emerald-100/70 border border-white/30 text-emerald-900/60 backdrop-blur-sm'
                     }`}
                   >
                     {type === 'All' ? 'All Flowers' : type}
@@ -384,7 +399,7 @@ export default function ShopPage({ onBackToHome }) {
 
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-20 bg-white border border-emerald-900/5 rounded-3xl shadow-sm">
+          <div className="text-center py-20 water-glass rounded-3xl shadow-sm">
             <p className="text-emerald-950 font-bold text-lg">No products found</p>
             <p className="text-emerald-900/50 text-sm mt-1">Try adjusting your search query or filters.</p>
           </div>
@@ -399,7 +414,7 @@ export default function ShopPage({ onBackToHome }) {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
-                  className="group relative flex flex-col justify-between p-4 rounded-3xl bg-white border border-emerald-900/5 shadow-sm hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px]"
+                  className="group relative flex flex-col justify-between p-4 rounded-3xl water-glass transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5"
                 >
                   {/* Floating Tags */}
                   <div className="absolute top-6 left-6 z-10 flex flex-col gap-1.5 items-start">
@@ -408,10 +423,9 @@ export default function ShopPage({ onBackToHome }) {
                     </span>
                   </div>
 
-                  {/* Favorite Button */}
                   <button
                     onClick={() => toggleFavorite(product.id)}
-                    className="absolute top-6 right-6 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-emerald-900/5 flex items-center justify-center text-emerald-900/40 hover:text-red-500 hover:scale-105 active:scale-95 transition-all focus:outline-none cursor-pointer"
+                    className="absolute top-6 right-6 z-10 w-8 h-8 rounded-full bg-white/50 backdrop-blur-sm border border-white/40 flex items-center justify-center text-emerald-900/40 hover:text-red-500 hover:scale-105 active:scale-95 transition-all focus:outline-none cursor-pointer"
                   >
                     <Heart className={`w-4 h-4 ${favorites[product.id] ? 'fill-red-500 text-red-500' : ''}`} />
                   </button>

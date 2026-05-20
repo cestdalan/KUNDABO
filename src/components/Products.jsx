@@ -117,7 +117,7 @@ export default function Products({ onExploreShop }) {
   });
 
   return (
-    <section id="shop" className="py-24 bg-white relative">
+    <section id="shop" className="py-24 bg-transparent relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
@@ -172,7 +172,7 @@ export default function Products({ onExploreShop }) {
           {sortedProducts.map((product) => (
             <div
               key={product.id}
-              className="group relative flex flex-col justify-between rounded-3xl border border-emerald-900/5 bg-brand-bg hover:bg-white p-4 shadow-sm hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px]"
+              className="group relative flex flex-col justify-between rounded-3xl water-glass p-4 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5"
             >
               <div>
                 {/* Product Image Area */}
@@ -214,7 +214,7 @@ export default function Products({ onExploreShop }) {
                   className={`p-2.5 rounded-xl border flex items-center justify-center transition-all ${
                     addedItems[product.id]
                       ? 'bg-secondary border-secondary text-white scale-95'
-                      : 'bg-white hover:bg-primary border-emerald-900/10 hover:border-primary text-emerald-900/80 hover:text-white hover:shadow-md'
+                      : 'bg-white/60 hover:bg-primary border-emerald-900/10 hover:border-primary text-emerald-900/80 hover:text-white hover:shadow-md backdrop-blur-sm'
                   }`}
                   aria-label={`Add ${product.name} to shopping cart`}
                 >

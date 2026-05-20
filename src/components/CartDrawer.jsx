@@ -54,7 +54,7 @@ export default function CartDrawer() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 220 }}
-              className="w-screen max-w-md bg-white shadow-2xl border-l border-emerald-900/5 flex flex-col"
+              className="w-screen max-w-md water-glass-drawer flex flex-col h-full"
             >
               {/* Header */}
               <div className="p-6 border-b border-emerald-900/5 flex items-center justify-between">

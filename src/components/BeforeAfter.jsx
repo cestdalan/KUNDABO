@@ -14,7 +14,7 @@ const PORTFOLIO_PROJECTS = [
     id: 2,
     title: 'Terracotta Container Patio',
     category: 'Vases & Decor',
-    image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1508502547303-f99987594041?auto=format&fit=crop&w=800&q=80', // Unique blue hydrangeas flowers!
     gridClass: 'md:col-span-2 md:row-span-2',
   },
   {
@@ -80,7 +80,7 @@ export default function BeforeAfter() {
             Before & After Transformations
           </h2>
           <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light font-sans">
-            Slide the divider or explore our portfolio to witness how we turn plain, empty spaces into lush, beautifully styled floral and garden masterpieces.
+            Slide the divider or explore our portfolio to witness how we turn dry, faded arrangements into lush, beautifully styled floral masterpieces.
           </p>
         </div>
 
@@ -95,8 +95,8 @@ export default function BeforeAfter() {
             {/* Before Image (Bottom) */}
             <div className="absolute inset-0 w-full h-full">
               <img
-                src="https://images.unsplash.com/photo-1560185127-6a2806647f81?auto=format&fit=crop&w=1200&q=80"
-                alt="Before decoration: Empty unadorned outdoor patio deck"
+                src="https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=1200&q=80"
+                alt="Before decoration: Dry and faded flower stems"
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
               <span className="absolute bottom-4 left-4 z-10 px-3.5 py-1.5 rounded-xl bg-red-950/70 backdrop-blur-md text-[10px] font-bold text-red-200 border border-red-800/10 uppercase tracking-widest">
@@ -112,8 +112,8 @@ export default function BeforeAfter() {
               {/* Force the inner image to remain full-width relative to the outer container */}
               <div className="absolute inset-0 w-[100vw] h-full" style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1512427691650-15fcce1dc7b1?auto=format&fit=crop&w=1200&q=80"
-                  alt="After decoration: Lush styled patio with hanging flowers and plants"
+                  src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=80"
+                  alt="After decoration: Vibrant fresh spring flowers in full bloom"
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               </div>

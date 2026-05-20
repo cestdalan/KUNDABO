@@ -6,12 +6,12 @@ import { useCart } from '../context/CartContext';
 const PRODUCTS = [
   {
     id: 'monstera',
-    name: 'Monstera Deliciosa (Swiss Cheese)',
+    name: 'Flowering Peace Lily Plant',
     category: 'Plants',
     price: 45.00,
     rating: 4.8,
     reviews: 124,
-    image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?auto=format&fit=crop&w=800&q=80',
     tag: 'Best Seller',
   },
   {
@@ -46,43 +46,43 @@ const PRODUCTS = [
   },
   {
     id: 'terracotta_vase',
-    name: 'Terracotta Ribbed Organic Vase',
+    name: 'Terracotta Vase with Fresh Peonies',
     category: 'Vases',
     price: 32.00,
     rating: 4.9,
     reviews: 115,
-    image: 'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1513551226419-ac2482c972ae?auto=format&fit=crop&w=800&q=80',
     tag: 'Artisanal',
   },
   {
     id: 'bud_vases',
-    name: 'Amber Glass Bud Vases (Set of 3)',
+    name: 'Amber Glass Vases with Ranunculus',
     category: 'Vases',
     price: 38.00,
     rating: 4.6,
     reviews: 64,
-    image: 'https://images.unsplash.com/photo-1595166290074-a6900ee9497d?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1508701000898-e5a40d7ea968?auto=format&fit=crop&w=800&q=80',
     tag: 'Set of 3',
   },
   {
     id: 'brass_trowel',
-    name: 'Ergonomic Brass Hand Trowel',
-    category: 'Tools',
+    name: 'Potted Flowering Jasmine',
+    category: 'Plants',
     price: 22.00,
     rating: 4.8,
     reviews: 95,
-    image: 'https://images.unsplash.com/photo-1617576683096-00fc8eecb3af?auto=format&fit=crop&w=800&q=80',
-    tag: 'Walnut Handle',
+    image: 'https://images.unsplash.com/photo-1507269837334-5968f1803b5b?auto=format&fit=crop&w=800&q=80',
+    tag: 'Fragrant Bloom',
   },
   {
     id: 'organic_feed',
-    name: 'Organic Flower Booster Feed',
-    category: 'Tools',
+    name: 'Organic Flower Petal Bath Box',
+    category: 'Flowers',
     price: 16.99,
     rating: 4.7,
     reviews: 130,
-    image: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=800&q=80',
-    tag: 'Bio-Nutrient',
+    image: 'https://images.unsplash.com/photo-1515002246390-7bf7e8f87b54?auto=format&fit=crop&w=800&q=80',
+    tag: 'Pure Organic',
   },
 ];
 
@@ -92,7 +92,7 @@ export default function Products({ onExploreShop }) {
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'price-low' | 'price-high' | 'rating'
   const [addedItems, setAddedItems] = useState({}); // Tracking added status for micro-animations
 
-  const categories = ['All', 'Plants', 'Flowers', 'Vases', 'Tools'];
+  const categories = ['All', 'Plants', 'Flowers', 'Vases'];
 
   const handleAddToCartClick = (product) => {
     addToCart(product);

@@ -57,8 +57,8 @@ export default function Navbar({ onOpenBooking, view, setView }) {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'glassmorphism border-b border-emerald-900/5 py-4 shadow-sm'
-          : 'bg-white/45 backdrop-blur-[6px] border-b border-emerald-900/5 py-5 shadow-sm'
+          ? 'bg-emerald-950/85 backdrop-blur-md border-b border-white/10 py-4 shadow-md'
+          : 'bg-emerald-900/40 backdrop-blur-[6px] border-b border-white/5 py-5 shadow-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
@@ -71,7 +71,7 @@ export default function Navbar({ onOpenBooking, view, setView }) {
           <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white transition-all group-hover:scale-105 shadow-md shadow-primary/20">
             <Leaf className="w-5 h-5 text-accent" />
           </div>
-          <span className="font-heading text-2xl font-bold tracking-tight text-emerald-950">
+          <span className="font-heading text-2xl font-bold tracking-tight text-white">
             Verdant
           </span>
         </a>
@@ -85,10 +85,10 @@ export default function Navbar({ onOpenBooking, view, setView }) {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.label, link.href)}
-                className={`text-sm font-medium transition-colors duration-200 relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-primary after:origin-right after:transition-transform after:duration-300 ${
+                className={`text-sm font-semibold transition-colors duration-200 relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-white after:origin-right after:transition-transform after:duration-300 ${
                   isShopActive 
-                    ? 'text-primary after:scale-x-100' 
-                    : 'text-emerald-900/70 hover:text-primary after:scale-x-0 hover:after:scale-x-100 hover:after:origin-left'
+                    ? 'text-white after:scale-x-100' 
+                    : 'text-white/80 hover:text-white after:scale-x-0 hover:after:scale-x-100 hover:after:origin-left'
                 }`}
               >
                 {link.label}
@@ -102,7 +102,7 @@ export default function Navbar({ onOpenBooking, view, setView }) {
           {/* Cart Icon */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative p-2.5 rounded-xl border border-emerald-900/10 hover:border-primary/30 hover:bg-emerald-50/50 text-emerald-900/80 hover:text-primary transition-all duration-250 cursor-pointer"
+            className="relative p-2.5 rounded-xl border border-white/10 hover:border-white/30 hover:bg-white/10 text-white/80 hover:text-white transition-all duration-250 cursor-pointer"
             aria-label={`Open shopping cart with ${cartCount} items`}
           >
             <ShoppingBag className="w-5 h-5" />
@@ -125,7 +125,7 @@ export default function Navbar({ onOpenBooking, view, setView }) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2.5 md:hidden rounded-xl border border-emerald-900/10 text-emerald-900/80"
+            className="p-2.5 md:hidden rounded-xl border border-white/10 text-white/80 hover:text-white"
             aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -135,7 +135,7 @@ export default function Navbar({ onOpenBooking, view, setView }) {
 
       {/* Mobile Drawer menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-[73px] left-0 right-0 glassmorphism border-b border-emerald-900/5 shadow-lg animate-fade-in">
+        <div className="md:hidden absolute top-[73px] left-0 right-0 bg-emerald-950/95 backdrop-blur-md border-b border-white/10 shadow-lg animate-fade-in">
           <div className="flex flex-col p-6 space-y-4">
             {navLinks.map((link) => {
               const isShopActive = link.label === 'Shop' && view === 'shop';
@@ -144,8 +144,8 @@ export default function Navbar({ onOpenBooking, view, setView }) {
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.label, link.href)}
-                  className={`text-base font-semibold transition-colors py-2 ${
-                    isShopActive ? 'text-primary' : 'text-emerald-900/80 hover:text-primary'
+                  className={`text-base font-semibold transition-colors py-2 text-left ${
+                    isShopActive ? 'text-accent' : 'text-white/80 hover:text-white'
                   }`}
                 >
                   {link.label}

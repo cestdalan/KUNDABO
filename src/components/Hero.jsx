@@ -25,8 +25,8 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1587334206506-ee21e3ca7feb?auto=format&fit=crop&w=2000&q=80"
-          alt="Premium bright plant nursery boutique with flowers and sun beams"
+          src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=2000&q=80"
+          alt="Premium fresh green and white florist flowers"
           className="w-full h-full object-cover object-center scale-105 select-none"
         />
         {/* Soft, rich gradient overlay using theme emerald/green colors */}

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, SlidersHorizontal, Star, ShoppingCart, Check, ArrowLeft, Heart } from 'lucide-react';
+import { Search, SlidersHorizontal, Star, ShoppingCart, Check, ArrowLeft, Heart, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const SHOP_PRODUCTS = [
@@ -183,9 +183,49 @@ export default function ShopPage({ onBackToHome }) {
   const [sortBy, setSortBy] = useState('featured');
   const [addedItems, setAddedItems] = useState({});
   const [favorites, setFavorites] = useState({});
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
 
   const categories = ['All', 'Flowers', 'Plants', 'Vases'];
   const collectionsList = ['All', 'Birthday', 'Wedding', 'Funeral', 'Garden'];
+
+  // YouTube-style search suggestions
+  const suggestions = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const q = searchQuery.toLowerCase();
+    const list = new Set();
+    
+    // Match categories
+    categories.forEach(cat => {
+      if (cat.toLowerCase().includes(q) && cat !== 'All') {
+        list.add(cat);
+      }
+    });
+    
+    // Match collections
+    collectionsList.forEach(col => {
+      if (col.toLowerCase().includes(q) && col !== 'All') {
+        list.add(col);
+      }
+    });
+    
+    // Match product names
+    SHOP_PRODUCTS.forEach(p => {
+      if (p.name.toLowerCase().includes(q)) {
+        list.add(p.name);
+      }
+      if (p.tag && p.tag.toLowerCase().includes(q)) {
+        list.add(p.tag);
+      }
+    });
+
+    return Array.from(list).slice(0, 8);
+  }, [searchQuery]);
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion);
+    setShowSuggestions(false);
+  };
 
   // Dynamically extract available flower types for flower tag selection
   const flowerTypes = useMemo(() => {
@@ -310,16 +350,78 @@ export default function ShopPage({ onBackToHome }) {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12">
         
-        {/* 🔍 Search Bar (First on the remaining area of the page!) */}
-        <div className="relative w-full mb-10">
-          <input
-            type="text"
-            placeholder="Search flowers, plants, vases, occasions..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4.5 rounded-2xl water-glass-input shadow-md text-base font-sans focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 text-white placeholder-emerald-100/35 transition-all"
-          />
-          <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 w-5.5 h-5.5 text-emerald-200/35" />
+        {/* 🔍 Search Bar with Live Suggestions */}
+        <div className="relative w-full mb-10 z-30">
+          <div className="relative flex items-center">
+            <Search className="absolute left-4.5 w-5.5 h-5.5 text-emerald-800/50" />
+            <input
+              type="text"
+              placeholder="Search flowers, plants, vases, collections..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowSuggestions(true);
+                setActiveSuggestionIndex(-1);
+              }}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowDown') {
+                  e.preventDefault();
+                  setActiveSuggestionIndex(prev => Math.min(prev + 1, suggestions.length - 1));
+                } else if (e.key === 'ArrowUp') {
+                  e.preventDefault();
+                  setActiveSuggestionIndex(prev => Math.max(prev - 1, -1));
+                } else if (e.key === 'Enter') {
+                  if (activeSuggestionIndex >= 0 && activeSuggestionIndex < suggestions.length) {
+                    setSearchQuery(suggestions[activeSuggestionIndex]);
+                    setShowSuggestions(false);
+                  } else {
+                    setShowSuggestions(false);
+                  }
+                } else if (e.key === 'Escape') {
+                  setShowSuggestions(false);
+                }
+              }}
+              className="w-full pl-12 pr-12 py-4.5 rounded-2xl water-glass shadow-lg text-base font-sans font-medium focus:outline-none focus:ring-2 focus:ring-accent/40 text-emerald-950 placeholder-emerald-850/50 transition-all border border-emerald-900/10"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setShowSuggestions(false);
+                }}
+                className="absolute right-4.5 p-1 rounded-full hover:bg-emerald-900/10 text-emerald-800/50 hover:text-emerald-950 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          {/* YouTube-style Suggestions Dropdown */}
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute left-0 right-0 mt-2 rounded-2xl water-glass shadow-2xl overflow-hidden border border-emerald-900/15 backdrop-blur-3xl z-40 max-h-[320px] overflow-y-auto">
+              <div className="py-2.5">
+                {suggestions.map((suggestion, idx) => {
+                  const isSelected = idx === activeSuggestionIndex;
+                  return (
+                    <button
+                      key={suggestion}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className={`w-full text-left px-5 py-3 text-sm font-sans flex items-center gap-3 transition-colors ${
+                        isSelected 
+                          ? 'bg-accent/25 text-emerald-950 font-semibold' 
+                          : 'text-emerald-900/80 hover:bg-accent/15 hover:text-emerald-950'
+                      }`}
+                    >
+                      <Search className="w-4 h-4 text-emerald-800/40 shrink-0" />
+                      <span>{suggestion}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Filter Controls (Categories, Collections & Flowers Sub-types) */}

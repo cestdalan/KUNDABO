@@ -14,6 +14,7 @@ const SHOP_PRODUCTS = [
     reviews: 124,
     image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80',
     tag: 'Best Seller',
+    collections: ['Garden', 'Birthday'],
   },
   {
     id: 'rose_bush',
@@ -25,6 +26,7 @@ const SHOP_PRODUCTS = [
     reviews: 82,
     image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
     tag: 'Outdoor Bloom',
+    collections: ['Garden', 'Wedding'],
   },
   {
     id: 'spring_bouquet',
@@ -36,6 +38,7 @@ const SHOP_PRODUCTS = [
     reviews: 242,
     image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80',
     tag: 'Fresh Cut',
+    collections: ['Birthday', 'Wedding'],
   },
   {
     id: 'pastel_meadow',
@@ -47,6 +50,7 @@ const SHOP_PRODUCTS = [
     reviews: 72,
     image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=800&q=80',
     tag: 'Seasonal Special',
+    collections: ['Birthday', 'Wedding'],
   },
   {
     id: 'crimson_roses',
@@ -56,8 +60,9 @@ const SHOP_PRODUCTS = [
     price: 65.00,
     rating: 4.9,
     reviews: 156,
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1533604140514-f6f7b60d9c4c?auto=format&fit=crop&w=800&q=80',
     tag: 'Romantic Choice',
+    collections: ['Wedding', 'Birthday'],
   },
   {
     id: 'white_lilies',
@@ -67,8 +72,9 @@ const SHOP_PRODUCTS = [
     price: 42.00,
     rating: 4.7,
     reviews: 94,
-    image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1597113366853-fc1920781cc6?auto=format&fit=crop&w=800&q=80',
     tag: 'Sympathy & Grace',
+    collections: ['Funeral', 'Wedding'],
   },
   {
     id: 'golden_tulips',
@@ -78,8 +84,9 @@ const SHOP_PRODUCTS = [
     price: 34.99,
     rating: 4.8,
     reviews: 112,
-    image: 'https://images.unsplash.com/photo-1550950158-d0d960dff51b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=800&q=80',
     tag: 'Bright Day',
+    collections: ['Birthday'],
   },
   {
     id: 'royal_orchid',
@@ -89,8 +96,9 @@ const SHOP_PRODUCTS = [
     price: 75.00,
     rating: 4.9,
     reviews: 67,
-    image: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=800&q=80',
     tag: 'Rare Exotic',
+    collections: ['Birthday', 'Funeral'],
   },
   {
     id: 'sunset_carnations',
@@ -100,8 +108,9 @@ const SHOP_PRODUCTS = [
     price: 29.00,
     rating: 4.6,
     reviews: 58,
-    image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=800&q=80',
     tag: 'Charming Blooms',
+    collections: ['Birthday', 'Funeral'],
   },
   {
     id: 'terracotta_vase',
@@ -113,6 +122,7 @@ const SHOP_PRODUCTS = [
     reviews: 115,
     image: 'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=800&q=80',
     tag: 'Artisanal',
+    collections: ['Garden', 'Wedding'],
   },
   {
     id: 'bud_vases',
@@ -124,6 +134,7 @@ const SHOP_PRODUCTS = [
     reviews: 64,
     image: 'https://images.unsplash.com/photo-1595166290074-a6900ee9497d?auto=format&fit=crop&w=800&q=80',
     tag: 'Set of 3',
+    collections: ['Garden', 'Wedding'],
   },
   {
     id: 'white_planter',
@@ -135,6 +146,7 @@ const SHOP_PRODUCTS = [
     reviews: 43,
     image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=800&q=80',
     tag: 'Indoor Deco',
+    collections: ['Garden'],
   },
   {
     id: 'brass_trowel',
@@ -146,6 +158,7 @@ const SHOP_PRODUCTS = [
     reviews: 95,
     image: 'https://images.unsplash.com/photo-1617576683096-00fc8eecb3af?auto=format&fit=crop&w=800&q=80',
     tag: 'Walnut Handle',
+    collections: ['Garden'],
   },
   {
     id: 'organic_feed',
@@ -157,6 +170,7 @@ const SHOP_PRODUCTS = [
     reviews: 130,
     image: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=800&q=80',
     tag: 'Bio-Nutrient',
+    collections: ['Garden'],
   },
 ];
 
@@ -164,12 +178,14 @@ export default function ShopPage({ onBackToHome }) {
   const { addToCart } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCollection, setSelectedCollection] = useState('All');
   const [selectedFlowerType, setSelectedFlowerType] = useState('All');
   const [sortBy, setSortBy] = useState('featured');
   const [addedItems, setAddedItems] = useState({});
   const [favorites, setFavorites] = useState({});
 
   const categories = ['All', 'Flowers', 'Plants', 'Vases', 'Tools'];
+  const collectionsList = ['All', 'Birthday', 'Wedding', 'Funeral', 'Garden'];
 
   // Dynamically extract available flower types for flower tag selection
   const flowerTypes = useMemo(() => {
@@ -204,13 +220,19 @@ export default function ShopPage({ onBackToHome }) {
       result = result.filter(p => 
         p.name.toLowerCase().includes(q) || 
         p.category.toLowerCase().includes(q) ||
-        p.type.toLowerCase().includes(q)
+        p.type.toLowerCase().includes(q) ||
+        p.collections.some(c => c.toLowerCase().includes(q))
       );
     }
 
     // Category filter
     if (selectedCategory !== 'All') {
       result = result.filter(p => p.category === selectedCategory);
+    }
+
+    // Collection / Occasion filter
+    if (selectedCollection !== 'All') {
+      result = result.filter(p => p.collections && p.collections.includes(selectedCollection));
     }
 
     // Flower type sub-filter
@@ -228,7 +250,7 @@ export default function ShopPage({ onBackToHome }) {
     }
 
     return result;
-  }, [searchQuery, selectedCategory, selectedFlowerType, sortBy]);
+  }, [searchQuery, selectedCategory, selectedCollection, selectedFlowerType, sortBy]);
 
   return (
     <div className="py-28 bg-brand-bg min-h-screen text-left">
@@ -237,14 +259,26 @@ export default function ShopPage({ onBackToHome }) {
         {/* Back navigation */}
         <button
           onClick={onBackToHome}
-          className="inline-flex items-center gap-2 mb-8 text-sm font-semibold text-secondary hover:text-primary transition-colors focus:outline-none group cursor-pointer"
+          className="inline-flex items-center gap-2 mb-6 text-sm font-semibold text-secondary hover:text-primary transition-colors focus:outline-none group cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
           <span>Back to Home</span>
         </button>
 
+        {/* 🔍 Search Bar (First on the Page!) */}
+        <div className="relative w-full mb-10">
+          <input
+            type="text"
+            placeholder="Search flowers, plants, vases, tools, occasions..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-4.5 rounded-2xl bg-white border border-emerald-900/10 shadow-md text-base font-sans focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-emerald-950 placeholder-emerald-900/30 transition-all"
+          />
+          <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 w-5.5 h-5.5 text-emerald-900/30" />
+        </div>
+
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div className="space-y-3">
             <span className="text-xs font-bold text-secondary uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full inline-block">
               Verdant Shop
@@ -273,25 +307,12 @@ export default function ShopPage({ onBackToHome }) {
           </div>
         </div>
 
-        {/* Filter Controls (Search bar & Categories) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
+        {/* Filter Controls (Categories, Collections & Flowers Sub-types) */}
+        <div className="space-y-6 mb-12">
           
-          {/* Search and High-level Categories */}
-          <div className="lg:col-span-12 flex flex-col md:flex-row gap-4 w-full">
-            {/* Search Bar */}
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Search flowers, plants, vases, tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white border border-emerald-900/5 shadow-sm text-sm font-sans focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-emerald-950 placeholder-emerald-900/30"
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-900/30" />
-            </div>
-
-            {/* High-level Category Tabs */}
-            <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 no-scrollbar select-none">
+          {/* Category Tabs */}
+          <div className="border-b border-emerald-900/5 pb-4">
+            <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 no-scrollbar select-none w-full">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -314,9 +335,31 @@ export default function ShopPage({ onBackToHome }) {
             </div>
           </div>
 
+          {/* Occasions / Collections Row */}
+          <div className="bg-white/50 border border-emerald-900/5 rounded-3xl p-5 shadow-sm space-y-3">
+            <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest">
+              Filter by Collection / Occasion
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {collectionsList.map((col) => (
+                <button
+                  key={col}
+                  onClick={() => setSelectedCollection(col)}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all focus:outline-none cursor-pointer ${
+                    selectedCollection === col
+                      ? 'bg-emerald-950 text-white shadow-sm'
+                      : 'bg-white text-emerald-900/60 hover:text-emerald-950 border border-emerald-900/5 shadow-sm'
+                  }`}
+                >
+                  {col === 'All' ? '🌸 All Occasions' : col === 'Birthday' ? '🎂 Birthday' : col === 'Wedding' ? '💍 Wedding' : col === 'Funeral' ? '🕊️ Funeral & Sympathy' : '🏡 Garden & Patio'}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Flowers subcategories / "Types of Flowers" (Visible when category is All or Flowers) */}
           {(selectedCategory === 'All' || selectedCategory === 'Flowers') && (
-            <div className="lg:col-span-12 bg-white/70 border border-emerald-900/5 rounded-3xl p-5 shadow-sm">
+            <div className="bg-white/70 border border-emerald-900/5 rounded-3xl p-5 shadow-sm">
               <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest mb-3">
                 Types of Flowers
               </h3>

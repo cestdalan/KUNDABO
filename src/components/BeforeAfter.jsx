@@ -79,8 +79,8 @@ export default function BeforeAfter() {
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-950 tracking-tight">
             Before & After Transformations
           </h2>
-          <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light">
-            Slide the divider or explore our portfolio to witness how we turn dry, plain soil beds into blooming floral gardens.
+          <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light font-sans">
+            Slide the divider or explore our portfolio to witness how we turn plain, empty spaces into lush, beautifully styled floral and garden masterpieces.
           </p>
         </div>
 
@@ -95,12 +95,12 @@ export default function BeforeAfter() {
             {/* Before Image (Bottom) */}
             <div className="absolute inset-0 w-full h-full">
               <img
-                src="https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=1200&q=80"
-                alt="Before planting: Bare dry garden bed soil"
+                src="https://images.unsplash.com/photo-1560185127-6a2806647f81?auto=format&fit=crop&w=1200&q=80"
+                alt="Before decoration: Empty unadorned outdoor patio deck"
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
               <span className="absolute bottom-4 left-4 z-10 px-3.5 py-1.5 rounded-xl bg-red-950/70 backdrop-blur-md text-[10px] font-bold text-red-200 border border-red-800/10 uppercase tracking-widest">
-                Before
+                Before Decoration
               </span>
             </div>
 
@@ -112,13 +112,13 @@ export default function BeforeAfter() {
               {/* Force the inner image to remain full-width relative to the outer container */}
               <div className="absolute inset-0 w-[100vw] h-full" style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=80"
-                  alt="After planting: Lush blooming flower garden"
+                  src="https://images.unsplash.com/photo-1512427691650-15fcce1dc7b1?auto=format&fit=crop&w=1200&q=80"
+                  alt="After decoration: Lush styled patio with hanging flowers and plants"
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               </div>
               <span className="absolute bottom-4 right-4 z-10 px-3.5 py-1.5 rounded-xl bg-primary/70 backdrop-blur-md text-[10px] font-bold text-accent border border-emerald-800/10 uppercase tracking-widest">
-                After Planting
+                After Styling
               </span>
             </div>
 

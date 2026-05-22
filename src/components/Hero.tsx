@@ -1,9 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Leaf, Sprout, Flower2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
-export default function Hero({ onOpenBooking, onExploreShop }) {
-  const handleScrollToShop = (e) => {
+interface HeroProps {
+  onOpenBooking: () => void;
+  onExploreShop: () => void;
+}
+
+export default function Hero({ onOpenBooking, onExploreShop }: HeroProps) {
+  const { t } = useLanguage();
+
+  const handleScrollToShop = (e: React.MouseEvent) => {
     e.preventDefault();
     if (onExploreShop) {
       onExploreShop();
@@ -24,10 +32,13 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
     >
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/garden_path.jpg"
-          alt="Premium winding garden pathway"
-          className="w-full h-full object-cover object-center scale-105 select-none"
+        <div 
+          className="w-full h-full bg-cover bg-center bg-no-repeat select-none"
+          style={{ 
+            backgroundImage: 'url("/garden_path.jpg")',
+            backgroundAttachment: 'fixed'
+          }}
+          aria-label="Premium winding garden pathway"
         />
         {/* Soft, rich gradient overlay using theme emerald/green colors */}
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-primary/45 md:bg-gradient-to-r md:from-primary md:via-primary/75 md:to-transparent" />
@@ -44,7 +55,7 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent/15 border border-accent/20 text-accent text-xs font-semibold uppercase tracking-wider"
           >
             <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
-            <span>Premium Floral & Botanical Design</span>
+            <span>{t('hero.badge')}</span>
           </motion.div>
 
           {/* Headline */}
@@ -66,7 +77,7 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-sans text-emerald-100/80 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-lg"
             >
-              Fresh hand-tied flower bouquets, rare air-purifying indoor houseplants, artisanal ceramic vases, and organic garden accessories.
+              {t('hero.desc')}
             </motion.p>
           </div>
 
@@ -81,14 +92,14 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
               onClick={onOpenBooking}
               className="px-7 py-4 rounded-2xl bg-accent hover:bg-accent-light text-primary font-bold text-sm tracking-wide transition-all shadow-lg shadow-accent/15 hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] cursor-pointer"
             >
-              Book Design Consult
+              {t('nav.book')}
             </button>
             <a
               href="#shop"
               onClick={handleScrollToShop}
               className="px-7 py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white border border-white/10 font-bold text-sm tracking-wide transition-all flex items-center gap-2 group backdrop-blur-sm cursor-pointer"
             >
-              Shop Store
+              {t('hero.explore')}
               <ArrowRight className="w-4.5 h-4.5 transition-transform group-hover:translate-x-1" />
             </a>
           </motion.div>
@@ -148,9 +159,6 @@ export default function Hero({ onOpenBooking, onExploreShop }) {
           </motion.div>
         </div>
       </div>
-
-
     </section>
   );
 }
-

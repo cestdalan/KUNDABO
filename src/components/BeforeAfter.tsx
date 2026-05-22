@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, ArrowLeftRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const PORTFOLIO_PROJECTS = [
   {
@@ -14,7 +15,7 @@ const PORTFOLIO_PROJECTS = [
     id: 2,
     title: 'Terracotta Container Patio',
     category: 'Vases & Decor',
-    image: 'https://images.unsplash.com/photo-1508502547303-f99987594041?auto=format&fit=crop&w=800&q=80', // Unique blue hydrangeas flowers!
+    image: 'https://images.unsplash.com/photo-1508502547303-f99987594041?auto=format&fit=crop&w=800&q=80',
     gridClass: 'md:col-span-2 md:row-span-2',
   },
   {
@@ -34,11 +35,12 @@ const PORTFOLIO_PROJECTS = [
 ];
 
 export default function BeforeAfter() {
+  const { t } = useLanguage();
   const [sliderPosition, setSliderPosition] = useState(50);
   const isDragging = useRef(false);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleMove = (clientX) => {
+  const handleMove = (clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
@@ -46,12 +48,12 @@ export default function BeforeAfter() {
     setSliderPosition(position);
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging.current) return;
     handleMove(e.touches[0].clientX);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current) return;
     handleMove(e.clientX);
   };
@@ -74,13 +76,13 @@ export default function BeforeAfter() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-bold text-secondary uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full inline-block">
-            Our Work
+            {t('ba.badge')}
           </span>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-950 tracking-tight">
-            Before & After Transformations
+            {t('ba.title')}
           </h2>
-          <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light font-sans">
-            Slide the divider or explore our portfolio to witness how we turn dry, faded arrangements into lush, beautifully styled floral masterpieces.
+          <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light">
+            {t('ba.desc')}
           </p>
         </div>
 
@@ -90,13 +92,13 @@ export default function BeforeAfter() {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onTouchMove={handleTouchMove}
-            className="relative h-[320px] sm:h-[450px] w-full rounded-2xl overflow-hidden cursor-ew-resize select-none no-select"
+            className="relative h-[320px] sm:h-[450px] w-full rounded-2xl overflow-hidden cursor-ew-resize select-none"
           >
             {/* Before Image (Bottom) */}
             <div className="absolute inset-0 w-full h-full z-0">
               <img
                 src="https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=1200&q=80"
-                alt="Before decoration: Dry and faded flower stems"
+                alt="Before decoration"
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
               <span className="absolute bottom-4 right-4 px-3.5 py-1.5 rounded-xl bg-emerald-950/65 backdrop-blur-md text-[10px] font-bold text-emerald-200/70 border border-emerald-800/10 uppercase tracking-widest pointer-events-none select-none">
@@ -109,11 +111,13 @@ export default function BeforeAfter() {
               className="absolute inset-0 h-full overflow-hidden z-10"
               style={{ width: `${sliderPosition}%` }}
             >
-              {/* Force the inner image to remain full-width relative to the outer container */}
-              <div className="absolute inset-0 w-[100vw] h-full" style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}>
+              <div 
+                className="absolute inset-0 w-[100vw] h-full" 
+                style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}
+              >
                 <img
                   src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=80"
-                  alt="After decoration: Vibrant fresh spring flowers in full bloom"
+                  alt="After styling"
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               </div>
@@ -130,7 +134,7 @@ export default function BeforeAfter() {
                 e.preventDefault();
                 isDragging.current = true;
               }}
-              onTouchStart={(e) => {
+              onTouchStart={() => {
                 isDragging.current = true;
               }}
             >

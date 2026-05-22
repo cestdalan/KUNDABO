@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { Quote, Sparkles, Star } from 'lucide-react';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence, useMotionValue, animate } from 'framer-motion';
+import { Quote, Sparkles, Star, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 
 const TESTIMONIALS = [
   {
@@ -78,30 +78,93 @@ export default function Testimonials() {
     offset: ["start end", "end start"]
   });
 
-  // Map scroll value to horizontal translation of the track
-  const trackX = useTransform(scrollYProgress, [0, 1], ["250px", "-450px"]);
-
   const [activeIndex, setActiveIndex] = useState(1); // Defaults to "YOU" (Index 1)
+  const [isManualMode, setIsManualMode] = useState(false);
+  
+  // Track X begins centered for index 1
+  const trackXValue = useMotionValue(110); 
 
-  // Map the scroll range to active index
+  // Map the scroll range to active index and track X when not in manual mode
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (isManualMode) return;
+
+    let newIndex = 1;
     if (latest < 0.22) {
-      setActiveIndex(0);
+      newIndex = 0;
     } else if (latest >= 0.22 && latest < 0.38) {
-      setActiveIndex(1);
+      newIndex = 1;
     } else if (latest >= 0.38 && latest < 0.54) {
-      setActiveIndex(2);
+      newIndex = 2;
     } else if (latest >= 0.54 && latest < 0.70) {
-      setActiveIndex(3);
+      newIndex = 3;
     } else if (latest >= 0.70 && latest < 0.86) {
-      setActiveIndex(4);
+      newIndex = 4;
     } else {
-      setActiveIndex(5);
+      newIndex = 5;
     }
+
+    setActiveIndex(newIndex);
+    
+    // Smoothly map current scrollYProgress to track coordinate
+    const targetX = 250 - (latest * 700);
+    trackXValue.set(targetX);
   });
+
+  // Enable manual navigation
+  const handleManualNavigate = (newIndex) => {
+    setIsManualMode(true);
+    setActiveIndex(newIndex);
+    
+    // Animate trackXValue smoothly to direct index offset coordinate
+    const targetX = 250 - (newIndex * 140);
+    animate(trackXValue, targetX, {
+      type: 'spring',
+      stiffness: 85,
+      damping: 16
+    });
+  };
+
+  // Reset back to page scroll drive
+  const handleResetToAuto = () => {
+    setIsManualMode(false);
+    
+    const latest = scrollYProgress.get();
+    let newIndex = 1;
+    if (latest < 0.22) newIndex = 0;
+    else if (latest >= 0.22 && latest < 0.38) newIndex = 1;
+    else if (latest >= 0.38 && latest < 0.54) newIndex = 2;
+    else if (latest >= 0.54 && latest < 0.70) newIndex = 3;
+    else if (latest >= 0.70 && latest < 0.86) newIndex = 4;
+    else newIndex = 5;
+
+    setActiveIndex(newIndex);
+    
+    const targetX = 250 - (latest * 700);
+    animate(trackXValue, targetX, {
+      type: 'spring',
+      stiffness: 90,
+      damping: 18
+    });
+  };
 
   return (
     <section id="testimonials" ref={containerRef} className="py-24 bg-transparent relative overflow-hidden text-left">
+      
+      {/* Floating Manual Mode Badge Indicator */}
+      {isManualMode && (
+        <div className="absolute top-4 right-4 md:right-12 z-20 flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/80 backdrop-blur-md border border-white/10 text-xs font-semibold text-white shadow-lg animate-fade-in">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
+          <span>Manual Control</span>
+          <button 
+            onClick={handleResetToAuto} 
+            className="p-1 rounded-full hover:bg-white/10 text-accent transition-colors flex items-center justify-center cursor-pointer ml-1"
+            title="Reset to Auto-Scroll"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
@@ -121,7 +184,7 @@ export default function Testimonials() {
           </div>
 
           {/* Sliding Track Container */}
-          <motion.div style={{ x: trackX }} className="absolute inset-y-0 left-0 w-[1440px] flex items-center">
+          <motion.div style={{ x: trackXValue }} className="absolute inset-y-0 left-0 w-[1440px] flex items-center">
             
             {/* SVG Wavy dotted line */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1440 240" fill="none">
@@ -171,7 +234,7 @@ export default function Testimonials() {
                         ? 'w-24 h-24 shadow-xl shadow-accent/25 z-20 scale-110 animate-none' 
                         : 'w-16 h-16 opacity-65 scale-90 animate-none'
                     }`}
-                    onClick={() => setActiveIndex(node.id)}
+                    onClick={() => handleManualNavigate(node.id)}
                   >
                     {/* Active Double Ring Border */}
                     {isActive && (
@@ -214,6 +277,23 @@ export default function Testimonials() {
             <Quote className="w-16 h-16 rotate-180 fill-current" />
           </div>
 
+          {/* Interactive Navigation Chevron Arrows */}
+          <button
+            onClick={() => handleManualNavigate((activeIndex - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
+            className="absolute left-[-20px] md:left-[-25px] top-1/2 -translate-y-1/2 w-11 h-11 rounded-full water-glass border border-white/40 hover:border-accent/40 text-emerald-950 hover:text-accent shadow-md flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer z-20"
+            aria-label="Previous Testimonial"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          
+          <button
+            onClick={() => handleManualNavigate((activeIndex + 1) % TESTIMONIALS.length)}
+            className="absolute right-[-20px] md:right-[-25px] top-1/2 -translate-y-1/2 w-11 h-11 rounded-full water-glass border border-white/40 hover:border-accent/40 text-emerald-950 hover:text-accent shadow-md flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer z-20"
+            aria-label="Next Testimonial"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
@@ -254,6 +334,21 @@ export default function Testimonials() {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        {/* Clicking Indicators Dots below the card */}
+        <div className="flex justify-center gap-2.5 mt-8">
+          {TESTIMONIALS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => handleManualNavigate(t.id)}
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                activeIndex === t.id ? 'w-7 bg-accent shadow-sm' : 'w-2.5 bg-emerald-900/25 hover:bg-emerald-900/40'
+              }`}
+              aria-label={`Go to testimonial ${t.id + 1}`}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );

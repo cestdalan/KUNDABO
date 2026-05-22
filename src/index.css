@@ -121,3 +121,12 @@ body::before {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Quick bounce response for Cart Landing */
+@keyframes bounce-quick {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3) rotate(-8deg); }
+}
+.animate-bounce-quick {
+  animation: bounce-quick 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}

@@ -1,101 +1,33 @@
 import React, { useState } from 'react';
 import { Star, ShoppingCart, Check, SlidersHorizontal } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart, ProductType } from '../context/CartContext';
+import { PRODUCTS } from '../data/products';
+import { useLanguage } from '../context/LanguageContext';
 
+interface ProductsProps {
+  onExploreShop?: () => void;
+  onProductClick?: (product: ProductType) => void;
+}
 
-const PRODUCTS = [
-  {
-    id: 'monstera',
-    name: 'Flowering Peace Lily Plant',
-    category: 'Plants',
-    price: 45.00,
-    rating: 4.8,
-    reviews: 124,
-    image: 'https://images.unsplash.com/photo-1593696140826-c58b021acf8b?auto=format&fit=crop&w=800&q=80',
-    tag: 'Best Seller',
-  },
-  {
-    id: 'rose_bush',
-    name: 'English Garden Rose Bush',
-    category: 'Plants',
-    price: 28.00,
-    rating: 4.7,
-    reviews: 82,
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-    tag: 'Outdoor Bloom',
-  },
-  {
-    id: 'spring_bouquet',
-    name: 'Spring Blossom Hand-Tied Bouquet',
-    category: 'Flowers',
-    price: 49.99,
-    rating: 4.9,
-    reviews: 242,
-    image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80',
-    tag: 'Fresh Cut',
-  },
-  {
-    id: 'pastel_meadow',
-    name: 'Pastel Meadow Bouquet',
-    category: 'Flowers',
-    price: 55.00,
-    rating: 4.8,
-    reviews: 72,
-    image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=800&q=80',
-    tag: 'Seasonal Special',
-  },
-  {
-    id: 'terracotta_vase',
-    name: 'Terracotta Vase with Fresh Peonies',
-    category: 'Vases',
-    price: 32.00,
-    rating: 4.9,
-    reviews: 115,
-    image: 'https://images.unsplash.com/photo-1513551226419-ac2482c972ae?auto=format&fit=crop&w=800&q=80',
-    tag: 'Artisanal',
-  },
-  {
-    id: 'bud_vases',
-    name: 'Amber Glass Vases with Ranunculus',
-    category: 'Vases',
-    price: 38.00,
-    rating: 4.6,
-    reviews: 64,
-    image: 'https://images.unsplash.com/photo-1508701000898-e5a40d7ea968?auto=format&fit=crop&w=800&q=80',
-    tag: 'Set of 3',
-  },
-  {
-    id: 'brass_trowel',
-    name: 'Potted Flowering Jasmine',
-    category: 'Plants',
-    price: 22.00,
-    rating: 4.8,
-    reviews: 95,
-    image: 'https://images.unsplash.com/photo-1507269837334-5968f1803b5b?auto=format&fit=crop&w=800&q=80',
-    tag: 'Fragrant Bloom',
-  },
-  {
-    id: 'organic_feed',
-    name: 'Organic Flower Petal Bath Box',
-    category: 'Flowers',
-    price: 16.99,
-    rating: 4.7,
-    reviews: 130,
-    image: 'https://images.unsplash.com/photo-1515002246390-7bf7e8f87b54?auto=format&fit=crop&w=800&q=80',
-    tag: 'Pure Organic',
-  },
-];
-
-export default function Products({ onExploreShop }) {
+export default function Products({ onExploreShop, onProductClick }: ProductsProps) {
   const { addToCart } = useCart();
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'price-low' | 'price-high' | 'rating'
-  const [addedItems, setAddedItems] = useState({}); // Tracking added status for micro-animations
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({}); // Tracking added status for micro-animations
 
   const categories = ['All', 'Plants', 'Flowers', 'Vases'];
 
-  const handleAddToCartClick = (product) => {
-    addToCart(product);
+  const categoryTranslationMap: Record<string, string> = {
+    'All': t('shop.all'),
+    'Plants': t('shop.plants'),
+    'Flowers': t('shop.flowers'),
+    'Vases': t('shop.vases'),
+  };
+
+  const handleAddToCartClick = (product: ProductType, e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart(product, e);
     setAddedItems((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => {
       setAddedItems((prev) => ({ ...prev, [product.id]: false }));
@@ -123,13 +55,13 @@ export default function Products({ onExploreShop }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="text-left space-y-4 max-w-2xl">
             <span className="text-xs font-bold text-secondary uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full inline-block">
-              Verdant Boutique
+              {t('shop.badge')}
             </span>
             <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-950 tracking-tight">
-              Curated Garden Store
+              {t('shop.title')}
             </h2>
             <p className="font-sans text-sm sm:text-base text-emerald-900/60 font-light">
-              Browse our handpicked fresh bouquets, potted houseplants, designer glass vases, and premium florist tools.
+              {t('shop.desc')}
             </p>
           </div>
 
@@ -146,7 +78,7 @@ export default function Products({ onExploreShop }) {
                       : 'text-emerald-900/60 hover:text-primary hover:bg-emerald-50/50'
                   }`}
                 >
-                  {cat}
+                  {categoryTranslationMap[cat] || cat}
                 </button>
               ))}
             </div>
@@ -158,21 +90,22 @@ export default function Products({ onExploreShop }) {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="bg-transparent border-none text-emerald-900/80 font-semibold focus:outline-none pr-2 cursor-pointer animate-none"
               >
-                <option value="featured">Featured</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="rating">Top Rated</option>
+                <option value="featured">{t('shop.sort.featured')}</option>
+                <option value="price-low">{t('shop.sort.lowToHigh')}</option>
+                <option value="price-high">{t('shop.sort.highToLow')}</option>
+                <option value="rating">{t('shop.sort.topRated')}</option>
               </select>
             </div>
           </div>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
           {sortedProducts.map((product) => (
             <div
               key={product.id}
-              className="group relative flex flex-col justify-between rounded-3xl water-glass p-4 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5"
+              onClick={() => onProductClick && onProductClick(product)}
+              className="group relative flex flex-col justify-between rounded-3xl water-glass p-4 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5 cursor-pointer text-left"
             >
               <div>
                 {/* Product Image Area */}
@@ -192,7 +125,7 @@ export default function Products({ onExploreShop }) {
                 {/* Info */}
                 <div className="px-1.5 text-left space-y-1.5">
                   <div className="flex items-center justify-between text-[10px] uppercase font-bold tracking-widest text-emerald-900/40">
-                    <span>{product.category}</span>
+                    <span>{categoryTranslationMap[product.category] || product.category}</span>
                     <div className="flex items-center gap-0.5 text-amber-500 font-semibold">
                       <Star className="w-3.5 h-3.5 fill-current" />
                       <span>{product.rating}</span>
@@ -204,24 +137,33 @@ export default function Products({ onExploreShop }) {
                 </div>
               </div>
 
-              {/* Purchase Bar */}
-              <div className="mt-4 pt-3.5 border-t border-emerald-900/5 flex items-center justify-between px-1.5">
-                <span className="text-lg font-bold text-emerald-950">
-                  ${product.price.toFixed(2)}
-                </span>
+              {/* Purchase Bar with Full Width "Add to Cart" Button */}
+              <div className="mt-4 pt-3.5 border-t border-emerald-900/5 flex flex-col gap-2.5 px-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-emerald-900/45 font-medium">Price</span>
+                  <span className="text-lg font-bold text-emerald-950">
+                    ${product.price.toFixed(2)}
+                  </span>
+                </div>
                 <button
-                  onClick={() => handleAddToCartClick(product)}
-                  className={`p-2.5 rounded-xl border flex items-center justify-center transition-all ${
+                  onClick={(e) => handleAddToCartClick(product, e)}
+                  className={`w-full py-2.5 rounded-xl border flex items-center justify-center gap-1.5 transition-all text-xs font-bold cursor-pointer ${
                     addedItems[product.id]
                       ? 'bg-secondary border-secondary text-white scale-95'
-                      : 'bg-white/60 hover:bg-primary border-emerald-900/10 hover:border-primary text-emerald-900/80 hover:text-white hover:shadow-md backdrop-blur-sm'
+                      : 'bg-emerald-950 hover:bg-emerald-900 border-emerald-950 text-white hover:shadow-md'
                   }`}
                   aria-label={`Add ${product.name} to shopping cart`}
                 >
                   {addedItems[product.id] ? (
-                    <Check className="w-4 h-4" />
+                    <>
+                      <Check className="w-4 h-4" />
+                      <span>{t('shop.added')}</span>
+                    </>
                   ) : (
-                    <ShoppingCart className="w-4 h-4" />
+                    <>
+                      <ShoppingCart className="w-4 h-4" />
+                      <span>{t('shop.addToCart')}</span>
+                    </>
                   )}
                 </button>
               </div>
@@ -236,7 +178,7 @@ export default function Products({ onExploreShop }) {
               onClick={onExploreShop}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-emerald-950 text-white text-sm font-semibold hover:bg-emerald-900 transition-all shadow-md shadow-emerald-950/20 active:translate-y-[1px] cursor-pointer"
             >
-              Explore Full Shop
+              {t('shop.explore')}
             </button>
           </div>
         )}

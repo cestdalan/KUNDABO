@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Leaf, Send, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       setIsSubscribed(true);
@@ -16,7 +18,7 @@ export default function Footer() {
     }
   };
 
-  const handleLinkClick = (e, href) => {
+  const handleLinkClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
@@ -98,11 +100,12 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2.5 text-sm text-emerald-200/60 font-light">
             {[
-              { label: 'Home', href: '#home' },
-              { label: 'Services', href: '#services' },
-              { label: 'Shop Store', href: '#shop' },
-              { label: 'Portfolio', href: '#portfolio' },
-              { label: 'Testimonials', href: '#testimonials' },
+              { label: t('nav.home'), href: '#home' },
+              { label: t('nav.services'), href: '#services' },
+              { label: t('nav.shop'), href: '#shop' },
+              { label: t('nav.portfolio'), href: '#portfolio' },
+              { label: t('nav.testimonials'), href: '#testimonials' },
+              { label: t('nav.contact'), href: '#contact' },
             ].map((link) => (
               <li key={link.label}>
                 <a

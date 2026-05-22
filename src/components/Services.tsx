@@ -1,36 +1,43 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Layers, Flower2, Lightbulb, Sprout, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
-export default function Services({ onOpenBooking }) {
+interface ServicesProps {
+  onOpenBooking: () => void;
+}
+
+export default function Services({ onOpenBooking }: ServicesProps) {
+  const { t } = useLanguage();
+
   const servicesList = [
     {
       id: 'floral',
-      title: 'Bespoke Floral Designs',
-      description: 'Bespoke tablescapes, hand-tied bridal bouquets, and custom floral arrangements tailored for homes and premium corporate spaces.',
+      title: t('services.floral'),
+      description: t('services.floral.desc'),
       icon: Flower2,
       highlight: 'Bespoke Styling',
     },
     {
-      id: 'garden_beds',
-      title: 'Flower Bed Curation',
-      description: 'Custom landscape color plans matching soil conditions, sunlight exposure, and flower varieties for beautiful year-round blooms.',
+      id: 'landscape',
+      title: t('services.landscape'),
+      description: t('services.landscape.desc'),
       icon: Layers,
       highlight: 'Planting & Design',
     },
     {
-      id: 'containers',
-      title: 'Patio Container Styling',
-      description: 'Curation of outdoor plants and shrubs paired with premium terracotta, ceramic, or self-watering decorative pots.',
+      id: 'care',
+      title: t('services.care'),
+      description: t('services.care.desc'),
       icon: Sprout,
-      highlight: 'Pots & Vases',
+      highlight: 'Garden Care',
     },
     {
-      id: 'consultations',
-      title: 'Houseplant Styling',
-      description: 'Interior workspace foliage mapping, matching light parameters, water cycles, and pot designs with your home decor.',
+      id: 'commercial',
+      title: t('services.commercial'),
+      description: t('services.commercial.desc'),
       icon: Lightbulb,
-      highlight: 'Expert Placement',
+      highlight: 'Corporate Green',
     },
   ];
 
@@ -40,13 +47,13 @@ export default function Services({ onOpenBooking }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-bold text-secondary uppercase tracking-widest bg-emerald-50 px-3 py-1.5 rounded-full inline-block">
-            Botanical Services
+            {t('services.badge')}
           </span>
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-950 tracking-tight">
-            Floral Design & Garden Services
+            {t('services.title')}
           </h2>
           <p className="font-sans text-sm sm:text-base text-emerald-900/60 leading-relaxed font-light">
-            We help you bring nature into your home and patio with professional floral arrangements, container styling, and expert guidance.
+            {t('services.desc')}
           </p>
         </div>
 
@@ -94,7 +101,7 @@ export default function Services({ onOpenBooking }) {
                     onClick={onOpenBooking}
                     className="flex items-center gap-1.5 text-xs font-bold text-secondary group-hover:text-primary transition-colors focus:outline-none"
                   >
-                    <span>Book Service</span>
+                    <span>{t('services.learnMore')}</span>
                     <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-[-0.5px]" />
                   </button>
                 </div>

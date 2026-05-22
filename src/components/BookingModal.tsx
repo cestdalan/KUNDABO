@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, CheckCircle2, Leaf, Clock, MapPin } from 'lucide-react';
 
-export default function BookingModal({ isOpen, onClose }) {
+interface BookingModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -168,7 +173,7 @@ export default function BookingModal({ isOpen, onClose }) {
                         Details & Preferences
                       </label>
                       <textarea
-                        rows="3"
+                        rows={3}
                         className="w-full px-4 py-2.5 rounded-xl border border-emerald-900/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-xs font-sans resize-none"
                         placeholder="Tell us briefly about your aesthetic, goals, and any specific flowers, colors, or pot types you love..."
                         value={formData.message}

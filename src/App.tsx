@@ -3,22 +3,37 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import BeforeAfter from './components/BeforeAfter';
+import HowItWorks from './components/HowItWorks';
 import Products from './components/Products';
 import Testimonials from './components/Testimonials';
+import ContactUs from './components/ContactUs';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import BookingModal from './components/BookingModal';
 import ShopPage from './components/ShopPage';
+import ProductDetailPage from './components/ProductDetailPage';
 import { useCart } from './context/CartContext';
 import { Leaf } from 'lucide-react';
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [view, setView] = useState('landing'); // 'landing' | 'shop'
+  const [view, setView] = useState('landing'); // 'landing' | 'garden' | 'product-detail'
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [previousView, setPreviousView] = useState('landing');
   const { notification } = useCart();
 
   const handleOpenBooking = () => setIsBookingOpen(true);
   const handleCloseBooking = () => setIsBookingOpen(false);
+
+  const handleProductClick = (product) => {
+    setPreviousView(view);
+    setSelectedProduct(product);
+    setView('product-detail');
+  };
+
+  const handleBackFromDetail = () => {
+    setView(previousView);
+  };
 
   return (
     <div className="min-h-screen bg-transparent font-sans selection:bg-accent/30 selection:text-emerald-950">
@@ -27,10 +42,10 @@ export default function App() {
 
       {/* Main Sections */}
       <main>
-        {view === 'landing' ? (
+        {view === 'landing' && (
           <>
             {/* Hero Section */}
-            <Hero onOpenBooking={handleOpenBooking} onExploreShop={() => setView('shop')} />
+            <Hero onOpenBooking={handleOpenBooking} onExploreShop={() => setView('garden')} />
 
             {/* Landscaping Services Section */}
             <Services onOpenBooking={handleOpenBooking} />
@@ -38,14 +53,30 @@ export default function App() {
             {/* Before & After Interactive Slider & Portfolio */}
             <BeforeAfter />
 
+            {/* How It Works Section */}
+            <HowItWorks />
+
             {/* eCommerce Shop Section */}
-            <Products onExploreShop={() => setView('shop')} />
+            <Products onExploreShop={() => setView('garden')} onProductClick={handleProductClick} />
 
             {/* Customer Testimonials Section */}
             <Testimonials />
+
+            {/* Contact Us Today Section */}
+            <ContactUs />
           </>
-        ) : (
-          <ShopPage onBackToHome={() => setView('landing')} />
+        )}
+
+        {view === 'garden' && (
+          <ShopPage onBackToHome={() => setView('landing')} onProductClick={handleProductClick} />
+        )}
+
+        {view === 'product-detail' && (
+          <ProductDetailPage 
+            product={selectedProduct} 
+            onBack={handleBackFromDetail} 
+            onProductClick={handleProductClick} 
+          />
         )}
       </main>
 

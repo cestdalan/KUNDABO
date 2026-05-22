@@ -68,7 +68,7 @@ export default function App() {
         )}
 
         {view === 'garden' && (
-          
+          <ShopPage onBackToHome={() => setView('landing')} onProductClick={handleProductClick} />
         )}
 
         {view === 'product-detail' && (

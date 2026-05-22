@@ -61,14 +61,14 @@ export default function App() {
 
             {/* Customer Testimonials Section */}
             <Testimonials />
-
+            
             {/* Contact Us Today Section */}
             <ContactUs />
           </>
         )}
 
         {view === 'garden' && (
-          <ShopPage onBackToHome={() => setView('landing')} onProductClick={handleProductClick} />
+          
         )}
 
         {view === 'product-detail' && (

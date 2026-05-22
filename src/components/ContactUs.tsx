@@ -49,7 +49,7 @@ export default function ContactUs() {
             <div className="relative w-full rounded-[32px] overflow-hidden border border-white/40 shadow-xl shadow-emerald-950/10 flex">
               <img
                 src="https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=1000&q=80"
-                alt="Verdant Boutique Kigali"
+                alt="Kundabo Boutique Kigali"
                 className="w-full h-full object-cover min-h-[400px] lg:min-h-full transition-transform duration-700 group-hover:scale-105"
               />
               {/* Glass overlay with elegant botanical typography overlay */}
@@ -58,7 +58,7 @@ export default function ContactUs() {
                   Visit Our Boutiques
                 </span>
                 <h4 className="font-heading text-xl font-bold text-emerald-950 leading-tight">
-                  Verdant Florists Kigali
+                  Kundabo Florists Kigali
                 </h4>
                 <p className="font-sans text-xs text-emerald-900/60 mt-1 font-light">
                   Step in and smell the roses, literally! Let our floral masters help you curate the perfect bouquet or green installation.

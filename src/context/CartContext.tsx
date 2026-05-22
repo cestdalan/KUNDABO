@@ -54,7 +54,7 @@ export const useCart = () => {
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItemType[]>(() => {
-    const localData = localStorage.getItem('verdant_cart');
+    const localData = localStorage.getItem('kundabo_cart');
     return localData ? JSON.parse(localData) : [];
   });
 
@@ -63,7 +63,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
 
   useEffect(() => {
-    localStorage.setItem('verdant_cart', JSON.stringify(cart));
+    localStorage.setItem('kundabo_cart', JSON.stringify(cart));
   }, [cart]);
 
   const showNotification = (message: string) => {

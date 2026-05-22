@@ -1,8 +1,164 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, SlidersHorizontal, Star, ShoppingCart, Check, ArrowLeft, Heart, X, TrendingUp } from 'lucide-react';
+import { Search, SlidersHorizontal, Star, ShoppingCart, Check, ArrowLeft, Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { PRODUCTS as SHOP_PRODUCTS } from '../data/products';
+
+const SHOP_PRODUCTS = [
+  {
+    id: 'monstera',
+    name: 'Monstera Deliciosa (Swiss Cheese)',
+    category: 'Plants',
+    type: 'Monstera',
+    price: 45.00,
+    rating: 4.8,
+    reviews: 124,
+    image: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80',
+    tag: 'Best Seller',
+  },
+  {
+    id: 'rose_bush',
+    name: 'English Garden Rose Bush',
+    category: 'Plants',
+    type: 'Roses',
+    price: 28.00,
+    rating: 4.7,
+    reviews: 82,
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+    tag: 'Outdoor Bloom',
+  },
+  {
+    id: 'spring_bouquet',
+    name: 'Spring Blossom Hand-Tied Bouquet',
+    category: 'Flowers',
+    type: 'Bouquets',
+    price: 49.99,
+    rating: 4.9,
+    reviews: 242,
+    image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80',
+    tag: 'Fresh Cut',
+  },
+  {
+    id: 'pastel_meadow',
+    name: 'Pastel Meadow Bouquet',
+    category: 'Flowers',
+    type: 'Bouquets',
+    price: 55.00,
+    rating: 4.8,
+    reviews: 72,
+    image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=800&q=80',
+    tag: 'Seasonal Special',
+  },
+  {
+    id: 'crimson_roses',
+    name: 'Crimson Desire Premium Roses (Dozen)',
+    category: 'Flowers',
+    type: 'Roses',
+    price: 65.00,
+    rating: 4.9,
+    reviews: 156,
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+    tag: 'Romantic Choice',
+  },
+  {
+    id: 'white_lilies',
+    name: 'Pure White Lilies Box Arrangement',
+    category: 'Flowers',
+    type: 'Lilies',
+    price: 42.00,
+    rating: 4.7,
+    reviews: 94,
+    image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80',
+    tag: 'Sympathy & Grace',
+  },
+  {
+    id: 'golden_tulips',
+    name: 'Golden Sunburst Tulips Bouquet',
+    category: 'Flowers',
+    type: 'Tulips',
+    price: 34.99,
+    rating: 4.8,
+    reviews: 112,
+    image: 'https://images.unsplash.com/photo-1550950158-d0d960dff51b?auto=format&fit=crop&w=800&q=80',
+    tag: 'Bright Day',
+  },
+  {
+    id: 'royal_orchid',
+    name: 'Royal Orchid Cascade (Double Spike)',
+    category: 'Plants',
+    type: 'Orchids',
+    price: 75.00,
+    rating: 4.9,
+    reviews: 67,
+    image: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&w=800&q=80',
+    tag: 'Rare Exotic',
+  },
+  {
+    id: 'sunset_carnations',
+    name: 'Sunset Carnations Autumn Bunch',
+    category: 'Flowers',
+    type: 'Carnations',
+    price: 29.00,
+    rating: 4.6,
+    reviews: 58,
+    image: 'https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&w=800&q=80',
+    tag: 'Charming Blooms',
+  },
+  {
+    id: 'terracotta_vase',
+    name: 'Terracotta Ribbed Organic Vase',
+    category: 'Vases',
+    type: 'Vases',
+    price: 32.00,
+    rating: 4.9,
+    reviews: 115,
+    image: 'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=800&q=80',
+    tag: 'Artisanal',
+  },
+  {
+    id: 'bud_vases',
+    name: 'Amber Glass Bud Vases (Set of 3)',
+    category: 'Vases',
+    type: 'Vases',
+    price: 38.00,
+    rating: 4.6,
+    reviews: 64,
+    image: 'https://images.unsplash.com/photo-1595166290074-a6900ee9497d?auto=format&fit=crop&w=800&q=80',
+    tag: 'Set of 3',
+  },
+  {
+    id: 'white_planter',
+    name: 'Minimalist White Ceramic Planter',
+    category: 'Vases',
+    type: 'Vases',
+    price: 26.00,
+    rating: 4.8,
+    reviews: 43,
+    image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=800&q=80',
+    tag: 'Indoor Deco',
+  },
+  {
+    id: 'brass_trowel',
+    name: 'Ergonomic Brass Hand Trowel',
+    category: 'Tools',
+    type: 'Tools',
+    price: 22.00,
+    rating: 4.8,
+    reviews: 95,
+    image: 'https://images.unsplash.com/photo-1617576683096-00fc8eecb3af?auto=format&fit=crop&w=800&q=80',
+    tag: 'Walnut Handle',
+  },
+  {
+    id: 'organic_feed',
+    name: 'Organic Flower Booster Feed',
+    category: 'Tools',
+    type: 'Tools',
+    price: 16.99,
+    rating: 4.7,
+    reviews: 130,
+    image: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=800&q=80',
+    tag: 'Bio-Nutrient',
+  },
+];
 
 interface ShopPageProps {
   onBackToHome: () => void;
@@ -12,91 +168,13 @@ interface ShopPageProps {
 export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps) {
   const { addToCart } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
-  const [typedQuery, setTypedQuery] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedCollection, setSelectedCollection] = useState('All');
   const [selectedFlowerType, setSelectedFlowerType] = useState('All');
   const [sortBy, setSortBy] = useState('featured');
-  const [addedItems, setAddedItems] = useState({});
-  const [favorites, setFavorites] = useState({});
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
+  const [favorites, setFavorites] = useState<Record<string, boolean>>({});
 
-  const categories = ['All', 'Flowers', 'Plants', 'Vases'];
-  const collectionsList = ['All', 'Birthday', 'Wedding', 'Funeral', 'Garden'];
-
-  // YouTube-style search suggestions based on typed query
-  const suggestions = useMemo(() => {
-    if (!typedQuery.trim()) return [];
-    const q = typedQuery.toLowerCase();
-    const list = new Set<string>();
-    
-    // Match categories
-    categories.forEach(cat => {
-      if (cat.toLowerCase().includes(q) && cat !== 'All') {
-        list.add(cat);
-      }
-    });
-    
-    // Match collections
-    collectionsList.forEach(col => {
-      if (col.toLowerCase().includes(q) && col !== 'All') {
-        list.add(col);
-      }
-    });
-    
-    // Match product names
-    SHOP_PRODUCTS.forEach(p => {
-      if (p.name.toLowerCase().includes(q)) {
-        list.add(p.name);
-      }
-      if (p.tag && p.tag.toLowerCase().includes(q)) {
-        list.add(p.tag);
-      }
-    });
-
-    return Array.from(list).slice(0, 8);
-  }, [typedQuery]);
-
-  const POPULAR_SEARCHES = useMemo(() => [
-    'Flowering Peace Lily',
-    'Spring Blossom Bouquet',
-    'Terracotta Vase',
-    'English Garden Rose'
-  ], []);
-
-  const activeSuggestions = useMemo(() => {
-    if (!typedQuery.trim()) {
-      return POPULAR_SEARCHES;
-    }
-    return suggestions;
-  }, [typedQuery, suggestions, POPULAR_SEARCHES]);
-
-  const handleSuggestionClick = (suggestion) => {
-    setSearchQuery(suggestion);
-    setTypedQuery(suggestion);
-    setShowSuggestions(false);
-  };
-
-  // Render suggestion text bolding the predicted characters (YouTube style)
-  const renderSuggestionText = (suggestion, query) => {
-    if (!query.trim()) return <span>{suggestion}</span>;
-    const index = suggestion.toLowerCase().indexOf(query.toLowerCase());
-    if (index === -1) return <span>{suggestion}</span>;
-    
-    const before = suggestion.substring(0, index);
-    const match = suggestion.substring(index, index + query.length);
-    const after = suggestion.substring(index + query.length);
-    
-    return (
-      <span className="text-emerald-950">
-        {before && <span className="font-bold">{before}</span>}
-        <span className="font-normal text-emerald-900/60">{match}</span>
-        {after && <span className="font-bold">{after}</span>}
-      </span>
-    );
-  };
+  const categories = ['All', 'Flowers', 'Plants', 'Vases', 'Tools'];
 
   // Dynamically extract available flower types for flower tag selection
   const flowerTypes = useMemo(() => {
@@ -109,16 +187,16 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
     return ['All', ...Array.from(types)];
   }, []);
 
-  const handleAddToCartClick = (product, e) => {
+  const handleAddToCartClick = (product: any, e: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    addToCart(product, e);
+    addToCart(product);
     setAddedItems((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => {
       setAddedItems((prev) => ({ ...prev, [product.id]: false }));
     }, 2000);
   };
 
-  const toggleFavorite = (id, e) => {
+  const toggleFavorite = (id: string, e: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setFavorites(prev => ({ ...prev, [id]: !prev[id] }));
   };
@@ -133,19 +211,13 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
       result = result.filter(p => 
         p.name.toLowerCase().includes(q) || 
         p.category.toLowerCase().includes(q) ||
-        p.type.toLowerCase().includes(q) ||
-        p.collections.some(c => c.toLowerCase().includes(q))
+        p.type.toLowerCase().includes(q)
       );
     }
 
     // Category filter
     if (selectedCategory !== 'All') {
       result = result.filter(p => p.category === selectedCategory);
-    }
-
-    // Collection / Occasion filter
-    if (selectedCollection !== 'All') {
-      result = result.filter(p => p.collections && p.collections.includes(selectedCollection));
     }
 
     // Flower type sub-filter
@@ -163,21 +235,21 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
     }
 
     return result;
-  }, [searchQuery, selectedCategory, selectedCollection, selectedFlowerType, sortBy]);
+  }, [searchQuery, selectedCategory, selectedFlowerType, sortBy]);
 
   return (
-    <div className="bg-transparent min-h-screen text-left pb-28">
+    <div className="bg-brand-bg min-h-screen text-left pb-28">
       {/* Shop Banner Top Section / Hero Section */}
-      <div className="relative min-h-[45vh] flex items-center justify-center overflow-hidden py-24">
+      <div className="relative min-h-[40vh] sm:min-h-[45vh] flex items-center justify-center overflow-hidden py-16 sm:py-24">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <div 
-            className="w-full h-full bg-cover bg-center bg-no-repeat select-none"
+            className="w-full h-full bg-cover bg-center bg-no-repeat select-none animate-fade-in"
             style={{ 
               backgroundImage: 'url("/shop_header.jpg")',
               backgroundAttachment: 'fixed'
             }}
-            aria-label="Verdant Shop Hero Banner"
+            aria-label="Kundabo Shop Hero Banner"
           />
           {/* Soft, rich gradient overlay using theme primary/green colors */}
           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/80 to-primary/50" />
@@ -197,7 +269,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
               <span className="text-xs font-bold text-accent uppercase tracking-widest bg-white/10 border border-white/15 px-3 py-1.5 rounded-full inline-block backdrop-blur-md">
-                Verdant Garden
+                Kundabo Shop
               </span>
               <h1 className="font-heading text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
                 Boutique Collection
@@ -225,154 +297,26 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12">
-        
-        {/* 🔍 Search Bar with Live Suggestions */}
-        <div className="relative w-full max-w-2xl mx-auto mb-12 z-30">
-          <div className="flex items-center w-full rounded-full water-glass shadow-lg border border-emerald-900/15 focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 transition-all duration-300 overflow-hidden relative">
-            
-            {/* Search icon inside the input area (conditional shift) */}
-            <div className="relative flex-1 flex items-center">
-              <div className={`absolute left-5 flex items-center justify-center transition-all duration-300 ${isFocused || searchQuery ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3 pointer-events-none'}`}>
-                <Search className="w-4.5 h-4.5 text-emerald-850/50" />
-              </div>
+
+        {/* Filter Controls (Search bar & Categories) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
+          
+          {/* Search and High-level Categories */}
+          <div className="lg:col-span-12 flex flex-col md:flex-row gap-4 w-full">
+            {/* Search Bar */}
+            <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Search flowers, plants, vases, collections..."
+                placeholder="Search flowers, plants, vases, tools..."
                 value={searchQuery}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  setSearchQuery(val);
-                  setTypedQuery(val);
-                  setShowSuggestions(true);
-                  setActiveSuggestionIndex(-1);
-                }}
-                onFocus={() => {
-                  setIsFocused(true);
-                  setShowSuggestions(true);
-                }}
-                onBlur={() => {
-                  setIsFocused(false);
-                  setTimeout(() => setShowSuggestions(false), 200);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (activeSuggestions.length === 0) return;
-                    setActiveSuggestionIndex(prev => {
-                      const next = Math.min(prev + 1, activeSuggestions.length - 1);
-                      if (next >= 0 && next < activeSuggestions.length) {
-                        setSearchQuery(activeSuggestions[next]);
-                      }
-                      return next;
-                    });
-                  } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (activeSuggestions.length === 0) return;
-                    setActiveSuggestionIndex(prev => {
-                      const next = Math.max(prev - 1, -1);
-                      if (next === -1) {
-                        setSearchQuery(typedQuery);
-                      } else if (next >= 0 && next < activeSuggestions.length) {
-                        setSearchQuery(activeSuggestions[next]);
-                      }
-                      return next;
-                    });
-                  } else if (e.key === 'Enter') {
-                    if (activeSuggestionIndex >= 0 && activeSuggestionIndex < activeSuggestions.length) {
-                      const selection = activeSuggestions[activeSuggestionIndex];
-                      setSearchQuery(selection);
-                      setTypedQuery(selection);
-                    }
-                    setShowSuggestions(false);
-                  } else if (e.key === 'Escape') {
-                    setShowSuggestions(false);
-                    (e.target as HTMLInputElement).blur();
-                  }
-                }}
-                className={`w-full bg-transparent py-4 outline-none text-emerald-950 placeholder-emerald-900/40 text-base font-sans font-medium transition-all ${
-                  isFocused || searchQuery ? 'pl-12 pr-12' : 'pl-6 pr-12'
-                }`}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white border border-emerald-900/5 shadow-sm text-sm font-sans focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-emerald-950 placeholder-emerald-900/30"
               />
-              
-              {/* Clear Button */}
-              {searchQuery && (
-                <button
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    setSearchQuery('');
-                    setTypedQuery('');
-                    setShowSuggestions(false);
-                  }}
-                  className="absolute right-3 p-1.5 rounded-full hover:bg-emerald-900/10 text-emerald-800/60 hover:text-emerald-950 transition-colors cursor-pointer shrink-0"
-                  title="Clear search"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-900/30" />
             </div>
 
-            {/* YouTube-style Search Button on the Right */}
-            <button
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => {
-                setShowSuggestions(false);
-              }}
-              className="bg-emerald-900/5 hover:bg-emerald-900/10 active:bg-emerald-900/15 text-emerald-900 px-6 py-4.5 border-l border-emerald-900/10 transition-colors flex items-center justify-center cursor-pointer shrink-0 self-stretch"
-              title="Search"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* YouTube-style Suggestions Dropdown */}
-          {showSuggestions && activeSuggestions.length > 0 && (
-            <div className="absolute left-0 right-0 mt-2 rounded-3xl water-glass shadow-2xl overflow-hidden border border-emerald-900/15 backdrop-blur-3xl z-40 max-h-[360px] overflow-y-auto">
-              <div className="py-3">
-                {/* Header for Popular Searches */}
-                {!typedQuery.trim() && (
-                  <div className="px-5 py-1.5 text-[10px] font-bold text-emerald-900/40 uppercase tracking-widest flex items-center gap-1.5 mb-1.5">
-                    <TrendingUp className="w-3.5 h-3.5 text-accent animate-pulse" />
-                    <span>Popular Searches</span>
-                  </div>
-                )}
-                
-                {activeSuggestions.map((suggestion, idx) => {
-                  const isSelected = idx === activeSuggestionIndex;
-                  return (
-                    <button
-                      key={suggestion}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        handleSuggestionClick(suggestion);
-                      }}
-                      className={`w-full text-left px-5 py-3 text-sm font-sans flex items-center gap-3 transition-all duration-150 ${
-                        isSelected 
-                          ? 'bg-primary/10 text-emerald-950 font-semibold pl-6 border-l-4 border-accent' 
-                          : 'text-emerald-900/80 hover:bg-primary/5 hover:text-emerald-950 border-l-4 border-transparent'
-                      }`}
-                    >
-                      {!typedQuery.trim() ? (
-                        <TrendingUp className="w-4 h-4 text-accent/70 shrink-0" />
-                      ) : (
-                        <Search className="w-4 h-4 text-emerald-800/40 shrink-0" />
-                      )}
-                      <span className="flex-1 truncate">
-                        {renderSuggestionText(suggestion, typedQuery)}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Filter Controls (Categories, Collections & Flowers Sub-types) */}
-        <div className="space-y-6 mb-12">
-          
-          {/* Category Tabs */}
-          <div className="border-b border-emerald-900/5 pb-4">
-            <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 no-scrollbar select-none w-full">
+            {/* High-level Category Tabs */}
+            <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 no-scrollbar select-none">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -386,7 +330,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
                   className={`px-5 py-3 rounded-2xl text-xs font-semibold tracking-wide whitespace-nowrap transition-all focus:outline-none cursor-pointer ${
                     selectedCategory === cat
                       ? 'bg-primary text-white shadow-md shadow-primary/10'
-                      : 'water-glass text-emerald-900/60 hover:text-primary shadow-sm'
+                      : 'bg-white text-emerald-900/60 hover:text-primary border border-emerald-900/5 shadow-sm'
                   }`}
                 >
                   {cat}
@@ -395,31 +339,9 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
             </div>
           </div>
 
-          {/* Occasions / Collections Row */}
-          <div className="water-glass rounded-3xl p-5 shadow-sm space-y-3">
-            <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest">
-              Filter by Collection / Occasion
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {collectionsList.map((col) => (
-                <button
-                  key={col}
-                  onClick={() => setSelectedCollection(col)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all focus:outline-none cursor-pointer ${
-                    selectedCollection === col
-                      ? 'bg-emerald-950 text-white shadow-sm'
-                      : 'bg-white/60 hover:text-emerald-950 border border-white/40 shadow-sm backdrop-blur-sm'
-                  }`}
-                >
-                  {col === 'All' ? '🌸 All Occasions' : col === 'Birthday' ? '🎂 Birthday' : col === 'Wedding' ? '💍 Wedding' : col === 'Funeral' ? '🕊️ Funeral & Sympathy' : '🏡 Garden & Patio'}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Flowers subcategories / "Types of Flowers" (Visible when category is All or Flowers) */}
           {(selectedCategory === 'All' || selectedCategory === 'Flowers') && (
-            <div className="water-glass rounded-3xl p-5 shadow-sm">
+            <div className="lg:col-span-12 bg-white/70 border border-emerald-900/5 rounded-3xl p-5 shadow-sm">
               <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest mb-3">
                 Types of Flowers
               </h3>
@@ -431,7 +353,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
                     className={`px-4 py-2 rounded-xl text-xs font-medium transition-all focus:outline-none cursor-pointer ${
                       selectedFlowerType === type
                         ? 'bg-secondary text-white shadow-sm'
-                        : 'bg-white/60 hover:bg-emerald-100/70 border border-white/30 text-emerald-900/60 backdrop-blur-sm'
+                        : 'bg-emerald-50 text-emerald-900/60 hover:bg-emerald-100'
                     }`}
                   >
                     {type === 'All' ? 'All Flowers' : type}
@@ -444,7 +366,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
 
         {/* Products Grid */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-20 water-glass rounded-3xl shadow-sm">
+          <div className="text-center py-20 bg-white border border-emerald-900/5 rounded-3xl shadow-sm">
             <p className="text-emerald-950 font-bold text-lg">No products found</p>
             <p className="text-emerald-900/50 text-sm mt-1">Try adjusting your search query or filters.</p>
           </div>
@@ -460,7 +382,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
                   onClick={() => onProductClick && onProductClick(product)}
-                  className="group relative flex flex-col justify-between p-4 rounded-3xl water-glass transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5 cursor-pointer text-left"
+                  className="group relative flex flex-col justify-between p-3 sm:p-4 rounded-3xl bg-white border border-emerald-900/5 shadow-sm hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px] cursor-pointer text-left"
                 >
                   {/* Floating Tags */}
                   <div className="absolute top-6 left-6 z-10 flex flex-col gap-1.5 items-start">
@@ -469,9 +391,10 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
                     </span>
                   </div>
 
+                  {/* Favorite Button */}
                   <button
                     onClick={(e) => toggleFavorite(product.id, e)}
-                    className="absolute top-6 right-6 z-10 w-8 h-8 rounded-full bg-white/50 backdrop-blur-sm border border-white/40 flex items-center justify-center text-emerald-900/40 hover:text-red-500 hover:scale-105 active:scale-95 transition-all focus:outline-none cursor-pointer"
+                    className="absolute top-6 right-6 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm border border-emerald-900/5 flex items-center justify-center text-emerald-900/40 hover:text-red-500 hover:scale-105 active:scale-95 transition-all focus:outline-none cursor-pointer"
                   >
                     <Heart className={`w-4 h-4 ${favorites[product.id] ? 'fill-red-500 text-red-500' : ''}`} />
                   </button>
@@ -507,14 +430,14 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
                   </div>
 
                   {/* Pricing & Add to Cart */}
-                  <div className="pt-4 border-t border-emerald-900/5 mt-4 flex items-center justify-between px-1">
-                    <span className="font-heading text-lg font-bold text-primary">
+                  <div className="pt-3 border-t border-emerald-900/5 mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
+                    <span className="font-heading text-base sm:text-lg font-bold text-primary">
                       ${product.price.toFixed(2)}
                     </span>
                     
                     <button
                       onClick={(e) => handleAddToCartClick(product, e)}
-                      className={`h-10 px-4 rounded-xl flex items-center gap-1.5 text-xs font-bold transition-all focus:outline-none cursor-pointer ${
+                      className={`h-9 sm:h-10 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold transition-all focus:outline-none cursor-pointer w-full sm:w-auto ${
                         addedItems[product.id]
                           ? 'bg-accent/20 text-secondary'
                           : 'bg-primary hover:bg-primary-hover text-white shadow-md shadow-primary/10 active:translate-y-[1px]'
@@ -522,12 +445,12 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
                     >
                       {addedItems[product.id] ? (
                         <>
-                          <Check className="w-4 h-4" />
+                          <Check className="w-3.5 h-3.5" />
                           <span>Added</span>
                         </>
                       ) : (
                         <>
-                          <ShoppingCart className="w-3.5 h-3.5" />
+                          <ShoppingCart className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                           <span>Add to Cart</span>
                         </>
                       )}

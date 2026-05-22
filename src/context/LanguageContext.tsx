@@ -243,13 +243,13 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('verdant_lang');
+    const saved = localStorage.getItem('kundabo_lang');
     return (saved === 'en' || saved === 'rw') ? (saved as Language) : 'en';
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('verdant_lang', lang);
+    localStorage.setItem('kundabo_lang', lang);
   };
 
   const t = (key: string): string => {

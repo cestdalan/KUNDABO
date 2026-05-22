@@ -38,7 +38,7 @@ export default function Footer() {
               <Leaf className="w-5 h-5" />
             </div>
             <span className="font-heading text-2xl font-bold tracking-tight text-white">
-              Verdant
+              Kundabo
             </span>
           </a>
           <p className="font-sans text-sm text-emerald-200/60 leading-relaxed font-light max-w-sm">
@@ -157,7 +157,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-200/40 gap-4">
-        <p>© {new Date().getFullYear()} Verdant. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Kundabo. All rights reserved.</p>
         <div className="flex gap-6">
           <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
           <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>

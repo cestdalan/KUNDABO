@@ -9,7 +9,7 @@ const TESTIMONIALS = [
     role: 'Event Director',
     company: 'Elegant Events',
     avatar: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=150&h=150&q=80',
-    quote: "Verdant's bespoke floral arrangements transformed our grand ballroom into a botanical dream. Guests were absolutely spellbound by the fresh pastel palettes!",
+    quote: "Kundabo's bespoke floral arrangements transformed our grand ballroom into a botanical dream. Guests were absolutely spellbound by the fresh pastel palettes!",
     type: 'logo',
     logoBg: 'bg-emerald-800',
     logoText: 'ELEGANT EVENTS',

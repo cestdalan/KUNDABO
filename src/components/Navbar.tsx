@@ -82,7 +82,7 @@ export default function Navbar({ onOpenBooking, view, setView }: NavbarProps) {
             <Leaf className="w-5 h-5 text-accent" />
           </div>
           <span className="font-heading text-2xl font-bold tracking-tight text-white">
-            Verdant
+            Kundabo
           </span>
         </a>
 

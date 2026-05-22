@@ -4,13 +4,13 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import BeforeAfter from './components/BeforeAfter';
 import HowItWorks from './components/HowItWorks';
-import Products from './components/Products';
 import Testimonials from './components/Testimonials';
 import ContactUs from './components/ContactUs';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import BookingModal from './components/BookingModal';
 import ShopPage from './components/ShopPage';
+import Carousel from './components/Carousel';
 import ProductDetailPage from './components/ProductDetailPage';
 import { useCart } from './context/CartContext';
 import { Leaf } from 'lucide-react';
@@ -46,6 +46,7 @@ export default function App() {
           <>
             {/* Hero Section */}
             <Hero onOpenBooking={handleOpenBooking} onExploreShop={() => setView('garden')} />
+            <Carousel />
 
             {/* Landscaping Services Section */}
             <Services onOpenBooking={handleOpenBooking} />
@@ -56,8 +57,7 @@ export default function App() {
             {/* How It Works Section */}
             <HowItWorks />
 
-            {/* eCommerce Shop Section */}
-            <Products onExploreShop={() => setView('garden')} onProductClick={handleProductClick} />
+
 
             {/* Customer Testimonials Section */}
             <Testimonials />

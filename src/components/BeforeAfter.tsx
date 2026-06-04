@@ -97,7 +97,7 @@ export default function BeforeAfter() {
             {/* Before Image (Bottom) */}
             <div className="absolute inset-0 w-full h-full z-0">
               <img
-                src="https://images.unsplash.com/photo-1507290439931-a861b5a38200?auto=format&fit=crop&w=1200&q=80"
+                src="/garden_before.jpg"
                 alt="Before decoration"
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
@@ -116,7 +116,7 @@ export default function BeforeAfter() {
                 style={{ width: containerRef.current ? containerRef.current.offsetWidth : '100%' }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=80"
+                  src="/garden_after.jpg"
                   alt="After styling"
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />

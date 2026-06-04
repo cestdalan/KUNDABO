@@ -8,7 +8,7 @@ const TESTIMONIALS = [
     name: 'Sophia Martinez',
     role: 'Event Director',
     company: 'Elegant Events',
-    avatar: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=150&h=150&q=80',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80',
     quote: "Kundabo's bespoke floral arrangements transformed our grand ballroom into a botanical dream. Guests were absolutely spellbound by the fresh pastel palettes!",
     type: 'logo',
     logoBg: 'bg-emerald-800',
@@ -17,11 +17,11 @@ const TESTIMONIALS = [
   },
   {
     id: 1,
-    name: 'Marcus Chen',
-    role: 'Homeowner',
-    company: 'YOU',
-    avatar: 'https://images.unsplash.com/photo-1533604140514-f6f7b60d9c4c?auto=format&fit=crop&w=150&h=150&q=80',
-    quote: "The flower bed curation service was worth every penny. My front yard went from bare soil to a lush, colorful tulip oasis that blooms beautifully every season.",
+    name: 'You',
+    role: 'Kundabo Customer',
+    company: 'Your Space',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80',
+    quote: 'you are the next to post your feedback here ',
     type: 'you',
     logoBg: 'bg-secondary',
     logoText: 'YOU',
@@ -32,7 +32,7 @@ const TESTIMONIALS = [
     name: 'Elena Rostova',
     role: 'Interior Stylist',
     company: 'Rostova Designs',
-    avatar: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=150&h=150&q=80',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&h=150&q=80',
     quote: "Their ribbed terracotta vases and fresh peony bouquets added the perfect organic texture to our modern penthouse designs. Absolutely premium quality.",
     type: 'image',
     rating: 5,
@@ -42,7 +42,7 @@ const TESTIMONIALS = [
     name: 'David K.',
     role: 'Boutique Owner',
     company: 'K-Boutique',
-    avatar: 'https://images.unsplash.com/photo-1507269837334-5968f1803b5b?auto=format&fit=crop&w=150&h=150&q=80',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80',
     quote: "Outstanding customer service and healthy flowering plants delivery. Our peace lily arrived in pristine condition, and the amber glass vases are absolutely gorgeous.",
     type: 'image',
     rating: 5,
@@ -52,7 +52,7 @@ const TESTIMONIALS = [
     name: 'Claire Dubois',
     role: 'Plant Enthusiast',
     company: 'Bloom Club',
-    avatar: 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=150&h=150&q=80',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80',
     quote: "The monthly newsletter has improved my floral styling drastically. Their hand-tied bouquet boxes are my go-to gift for friends.",
     type: 'image',
     rating: 5,
@@ -62,7 +62,7 @@ const TESTIMONIALS = [
     name: 'Pacific Designs',
     role: 'Creative Partner',
     company: 'Pacific Designs',
-    avatar: 'https://images.unsplash.com/photo-1597113366853-fc1920781cc6?auto=format&fit=crop&w=150&h=150&q=80',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&h=150&q=80',
     quote: "Floral containers styling has elevated our commercial patios significantly. The custom floral arrangements and seasonal flower selections are unmatched.",
     type: 'logo',
     logoBg: 'bg-sky-600',
@@ -241,28 +241,23 @@ export default function Testimonials() {
                       <div className="absolute -inset-2.5 rounded-full border-2 border-accent animate-pulse pointer-events-none" />
                     )}
 
-                    {/* Node styling depending on type */}
-                    {node.type === 'you' ? (
-                      <div className="w-full h-full rounded-full bg-secondary border-[3px] border-white text-white font-heading text-sm font-extrabold flex items-center justify-center shadow-lg">
-                        {node.logoText}
-                      </div>
-                    ) : node.type === 'logo' ? (
-                      <div className={`w-full h-full rounded-full ${node.logoBg} border-[3px] border-white text-white text-[9px] font-bold tracking-tighter uppercase px-2 text-center flex flex-col items-center justify-center shadow-md`}>
-                        {node.logoText === 'P' ? (
-                          <span className="text-xl font-heading font-black">P</span>
-                        ) : (
-                          <>
-                            <Sparkles className="w-3.5 h-3.5 mb-0.5 text-accent animate-pulse" />
-                            <span className="leading-none scale-[0.85]">{node.logoText}</span>
-                          </>
-                        )}
-                      </div>
-                    ) : (
+                    {/* All nodes now render their real profile image */}
+                    <div className="relative w-full h-full rounded-full overflow-hidden border-[3px] border-white shadow-md">
                       <img
                         src={node.avatar}
                         alt={node.name}
-                        className="w-full h-full rounded-full border-[3px] border-white object-cover shadow-md"
+                        className="w-full h-full object-cover select-none"
                       />
+                      {node.id === 1 && (
+                        <div className="absolute inset-0 bg-secondary/15 flex items-center justify-center pointer-events-none" />
+                      )}
+                    </div>
+
+                    {/* Small visual overlay label for the YOU profile to identify it */}
+                    {node.id === 1 && (
+                      <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 bg-accent text-secondary text-[8px] font-extrabold px-1.5 py-0.5 rounded-full border border-white uppercase tracking-wider shadow z-30">
+                        YOU
+                      </div>
                     )}
                   </div>
                 </div>

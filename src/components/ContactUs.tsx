@@ -115,13 +115,13 @@ export default function ContactUs() {
                 {/* Glass overlay with elegant botanical typography overlay */}
                 <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl water-glass backdrop-blur-md flex flex-col justify-end">
                   <span className="text-[10px] font-bold text-accent uppercase tracking-widest mb-1.5">
-                    Visit Our Boutiques
+                    Creative Landscaping
                   </span>
                   <h4 className="font-heading text-lg sm:text-xl font-bold text-emerald-950 leading-tight">
-                    Kundabo Florists Kigali
+                    design your garden with <span className="font-heading italic text-accent font-extrabold tracking-wide">kundabo</span>
                   </h4>
                   <p className="font-sans text-[11px] text-emerald-900/60 mt-1 font-light leading-relaxed">
-                    Step in and experience the botanical difference. Let our floral masters help you curate the perfect bouquet or green installation.
+                    Elevating outdoor and indoor spaces across Kigali with lush gardens, custom water pools, and premium botanical designs.
                   </p>
                 </div>
               </div>

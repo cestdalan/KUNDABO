@@ -78,9 +78,11 @@ export default function Navbar({ onOpenBooking, view, setView }: NavbarProps) {
           onClick={(e) => handleLinkClick(e, 'Home', '#home')}
           className="flex items-center gap-2 group focus:outline-none"
         >
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white transition-all group-hover:scale-105 shadow-md shadow-primary/20">
-            <Leaf className="w-5 h-5 text-accent" />
-          </div>
+          <img 
+            src="/logo_flower_only.png" 
+            alt="Kundabo" 
+            className="w-10 h-10 object-contain transition-transform group-hover:scale-105 duration-300"
+          />
           <span className="font-heading text-2xl font-bold tracking-tight text-white">
             Kundabo
           </span>

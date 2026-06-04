@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Leaf, Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-export default function Footer() {
+interface FooterProps {
+  view?: string;
+  setView?: (view: string) => void;
+}
+
+export default function Footer({ view = 'landing', setView }: FooterProps) {
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -20,11 +25,32 @@ export default function Footer() {
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      const yOffset = -80;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+    
+    if (href === '#shop') {
+      if (setView) {
+        setView('shop');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    if (view !== 'landing' && setView) {
+      setView('landing');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          const yOffset = -85;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        const yOffset = -85;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
     }
   };
 
@@ -33,13 +59,12 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12 text-left">
         {/* Brand Section */}
         <div className="md:col-span-5 space-y-6">
-          <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="flex items-center gap-2 group inline-block">
-            <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-primary transition-transform group-hover:scale-105 shadow-md shadow-accent/10">
-              <Leaf className="w-5 h-5" />
-            </div>
-            <span className="font-heading text-2xl font-bold tracking-tight text-white">
-              Kundabo
-            </span>
+          <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="block group w-max focus:outline-none">
+            <img 
+              src="/logo_transparent.png" 
+              alt="Kundabo" 
+              className="h-16 w-auto transition-transform group-hover:scale-[1.03] duration-300"
+            />
           </a>
           <p className="font-sans text-sm text-emerald-200/60 leading-relaxed font-light max-w-sm">
             Premium flower arrangements, fresh bouquets, designer vases, and rare houseplants delivered with eco-friendly care directly to your door.

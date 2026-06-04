@@ -81,7 +81,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer view={view} setView={setView} />
 
       {/* Slide-out Cart Drawer */}
       <CartDrawer />

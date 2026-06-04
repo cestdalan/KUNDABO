@@ -12,44 +12,36 @@ interface SlideItem {
 
 const CAROUSEL_SLIDES: SlideItem[] = [
   {
-    image: 'https://images.unsplash.com/photo-1533604140514-f6f7b60d9c4c?auto=format&fit=crop&w=1200&q=80',
+    image: '/red_roses_mesh_bouquet.jpg',
     title: 'Crimson Desire Premium Roses',
     category: 'Romantic Collection',
     tag: 'Best Seller',
     price: '$65.00',
-    description: 'A classic declaration of passion and elegance. A full dozen long-stemmed crimson red roses handpicked at peak bloom.',
+    description: 'A classic declaration of passion and elegance. A full dozen long-stemmed crimson red roses wrapped in premium mesh and craft paper.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=80',
+    image: '/meadow_grass_bouquet.jpg',
     title: 'Spring Blossom Hand-Tied Bouquet',
     category: 'Vibrant Meadows',
     tag: 'Fresh Cut',
     price: '$49.99',
-    description: 'A lively, custom-curated bouquet of fresh ranunculus, tulips, snapdragons, and silver dollar eucalyptus.',
+    description: 'A lively, custom-curated hand-tied bouquet of fresh field flowers, red daisies, and peach roses hand-bound with twine.',
   },
   {
-    image: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=1200&q=80',
-    title: 'Golden Sunburst Tulips Bouquet',
-    category: 'Bright Day Collection',
-    tag: 'Seasonal Special',
-    price: '$34.99',
-    description: 'A bright, joyful burst of golden-yellow Dutch tulips handpicked from sustainable organic farms.',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
-    title: 'English Garden Rose Bush',
-    category: 'Outdoor Bloom',
-    tag: 'Aromatic',
-    price: '$28.00',
-    description: 'A timeless outdoor classic featuring fragrant, layered pink and blush blooms to add romance to your spaces.',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1597113366853-fc1920781cc6?auto=format&fit=crop&w=1200&q=80',
-    title: 'Pure White Lilies Box Arrangement',
-    category: 'Sympathy & Grace',
-    tag: 'Stately Beauty',
+    image: '/white_hydrangeas_bouquet.jpg',
+    title: 'Maison Fleurus White Hydrangeas',
+    category: 'Luxury Hydrangeas',
+    tag: 'Parisian Style',
     price: '$42.00',
-    description: 'A serene, stately presentation of snowy white oriental lilies designed to fill the room with deep perfume.',
+    description: 'An exquisite, luxury bouquet of pure white hydrangeas wrapped in signature Maison Fleurus craft paper.',
+  },
+  {
+    image: '/vibrant_roses_bouquet.jpg',
+    title: 'Vibrant Mixed Roses Bouquet',
+    category: 'Garden Classics',
+    tag: 'Fresh Arranged',
+    price: '$55.00',
+    description: 'A vibrant, romantic gathering of fresh pink and yellow roses mixed with alstroemeria and lush greenery.',
   }
 ];
 

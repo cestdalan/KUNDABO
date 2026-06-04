@@ -17,7 +17,7 @@ import { Leaf } from 'lucide-react';
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [view, setView] = useState('landing'); // 'landing' | 'garden' | 'product-detail'
+  const [view, setView] = useState('landing'); // 'landing' | 'shop' | 'product-detail'
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [previousView, setPreviousView] = useState('landing');
   const { notification } = useCart();
@@ -45,7 +45,7 @@ export default function App() {
         {view === 'landing' && (
           <>
             {/* Hero Section */}
-            <Hero onOpenBooking={handleOpenBooking} onExploreShop={() => setView('garden')} />
+            <Hero onOpenBooking={handleOpenBooking} onExploreShop={() => setView('shop')} />
             <Carousel />
 
             {/* Landscaping Services Section */}
@@ -67,7 +67,7 @@ export default function App() {
           </>
         )}
 
-        {view === 'garden' && (
+        {view === 'shop' && (
           <ShopPage onBackToHome={() => setView('landing')} onProductClick={handleProductClick} />
         )}
 

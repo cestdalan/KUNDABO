@@ -48,7 +48,7 @@ const CAROUSEL_SLIDES: SlideItem[] = [
 export default function Carousel() {
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const slideInterval = useRef<NodeJS.Timeout | null>(null);
+  const slideInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startSlideShow = () => {
     stopSlideShow();

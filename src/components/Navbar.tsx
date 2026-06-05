@@ -81,7 +81,7 @@ export default function Navbar({ onOpenBooking, view, setView }: NavbarProps) {
           <img 
             src="/logo_flower_only.png" 
             alt="Kundabo" 
-            className="w-10 h-10 object-contain transition-transform group-hover:scale-105 duration-300"
+            className="w-12 h-12 object-contain transition-transform group-hover:scale-105 duration-300"
           />
           <span className="font-heading text-2xl font-bold tracking-tight text-white">
             Kundabo

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -17,10 +17,33 @@ import { Leaf } from 'lucide-react';
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [view, setView] = useState('landing'); // 'landing' | 'shop' | 'product-detail'
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [previousView, setPreviousView] = useState('landing');
+  const [view, setView] = useState(() => {
+    const saved = localStorage.getItem('kundabo_view');
+    return (saved === 'shop' || saved === 'landing' || saved === 'product-detail') ? saved : 'landing';
+  });
+  const [selectedProduct, setSelectedProduct] = useState(() => {
+    const saved = localStorage.getItem('kundabo_product');
+    try {
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [previousView, setPreviousView] = useState(() => {
+    const saved = localStorage.getItem('kundabo_prev_view');
+    return (saved === 'shop' || saved === 'landing') ? saved : 'landing';
+  });
   const { notification } = useCart();
+
+  useEffect(() => {
+    localStorage.setItem('kundabo_view', view);
+    localStorage.setItem('kundabo_prev_view', previousView);
+    if (selectedProduct) {
+      localStorage.setItem('kundabo_product', JSON.stringify(selectedProduct));
+    } else {
+      localStorage.removeItem('kundabo_product');
+    }
+  }, [view, selectedProduct, previousView]);
 
   const handleOpenBooking = () => setIsBookingOpen(true);
   const handleCloseBooking = () => setIsBookingOpen(false);
@@ -84,7 +107,7 @@ export default function App() {
       <Footer view={view} setView={setView} />
 
       {/* Slide-out Cart Drawer */}
-      <CartDrawer />
+      <CartDrawer setView={setView} />
 
       {/* Booking Modal Consultation Form (Now acts as a right drawer) */}
       <BookingModal isOpen={isBookingOpen} onClose={handleCloseBooking} />

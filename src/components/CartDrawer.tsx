@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, CreditCard, Sparkles } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
-export default function CartDrawer() {
+interface CartDrawerProps {
+  setView?: (view: string) => void;
+}
+
+export default function CartDrawer({ setView }: CartDrawerProps) {
   const {
     cart,
     isCartOpen,
@@ -16,6 +20,9 @@ export default function CartDrawer() {
 
   const [checkoutStep, setCheckoutStep] = useState('cart'); // 'cart' | 'checkout' | 'success'
   const [shippingMethod, setShippingMethod] = useState('delivery'); // 'delivery' | 'pickup'
+  const [paymentMethod, setPaymentMethod] = useState('momo'); // 'momo' | 'airtel' | 'card'
+  const [momoNumber, setMomoNumber] = useState('');
+  const [airtelNumber, setAirtelNumber] = useState('');
 
   const shippingCost = shippingMethod === 'delivery' ? (cartSubtotal > 150 ? 0 : 15.00) : 0;
   const estimatedTax = cartSubtotal * 0.0825; // 8.25% tax
@@ -31,6 +38,9 @@ export default function CartDrawer() {
     // Reset checkout step on close so it resets if they reopen later
     setTimeout(() => {
       setCheckoutStep('cart');
+      setPaymentMethod('momo');
+      setMomoNumber('');
+      setAirtelNumber('');
     }, 300);
   };
 
@@ -97,8 +107,11 @@ export default function CartDrawer() {
                           <p className="text-sm text-emerald-900/50 mt-1">Lush green spaces start with a single plant.</p>
                         </div>
                         <button
-                          onClick={handleClose}
-                          className="px-6 py-2.5 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-hover transition-colors shadow-sm"
+                          onClick={() => {
+                            handleClose();
+                            if (setView) setView('shop');
+                          }}
+                          className="px-6 py-2.5 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-hover transition-colors shadow-sm cursor-pointer"
                         >
                           Start Shopping
                         </button>
@@ -240,56 +253,157 @@ export default function CartDrawer() {
                         </div>
                       </div>
 
-                      <div className="pt-2">
-                        <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider mb-1">
-                          Card Details
+                      {/* Payment Method Option Selector */}
+                      <div className="pt-2 space-y-2">
+                        <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider">
+                          Choose Payment Option
                         </label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            required
-                            className="w-full pl-9 pr-3 py-2 rounded-xl border border-emerald-900/10 focus:border-primary outline-none text-xs"
-                            placeholder="4111 2222 3333 4444"
-                          />
-                          <CreditCard className="absolute left-3 top-2.5 w-3.5 h-3.5 text-emerald-900/30" />
+                        <div className="grid grid-cols-3 gap-2">
+                          {/* MTN MoMo */}
+                          <button
+                            type="button"
+                            onClick={() => setPaymentMethod('momo')}
+                            className={`py-2 px-1 border rounded-xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                              paymentMethod === 'momo'
+                                ? 'border-[#FFCC00] bg-[#FFCC00]/5 text-[#003366] font-bold shadow-sm'
+                                : 'border-emerald-900/10 bg-white/20 text-emerald-900/60 hover:bg-white/40'
+                            }`}
+                          >
+                            <div className="w-7 h-7 rounded-lg bg-[#FFCC00] flex items-center justify-center text-[#003366] font-extrabold text-[9px] select-none shadow-sm">
+                              MoMo
+                            </div>
+                            <span className="text-[9px] truncate">MTN MoMo</span>
+                          </button>
+
+                          {/* Airtel Money */}
+                          <button
+                            type="button"
+                            onClick={() => setPaymentMethod('airtel')}
+                            className={`py-2 px-1 border rounded-xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                              paymentMethod === 'airtel'
+                                ? 'border-[#E31837] bg-[#E31837]/5 text-[#E31837] font-bold shadow-sm'
+                                : 'border-emerald-900/10 bg-white/20 text-emerald-900/60 hover:bg-white/40'
+                            }`}
+                          >
+                            <div className="w-7 h-7 rounded-lg bg-[#E31837] flex items-center justify-center text-white font-bold text-[9px] select-none shadow-sm">
+                              airtel
+                            </div>
+                            <span className="text-[9px] truncate">Airtel</span>
+                          </button>
+
+                          {/* Credit Card */}
+                          <button
+                            type="button"
+                            onClick={() => setPaymentMethod('card')}
+                            className={`py-2 px-1 border rounded-xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                              paymentMethod === 'card'
+                                ? 'border-primary bg-emerald-50/30 text-primary font-bold shadow-sm'
+                                : 'border-emerald-900/10 bg-white/20 text-emerald-900/60 hover:bg-white/40'
+                            }`}
+                          >
+                            <div className="w-7 h-7 rounded-lg bg-emerald-950 flex items-center justify-center text-white shadow-sm">
+                              <CreditCard className="w-4 h-4 text-accent" />
+                            </div>
+                            <span className="text-[9px] truncate">Card</span>
+                          </button>
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider mb-1">
-                            Expiry Date
+
+                      {/* Conditionally Render Inputs Based on Selection */}
+                      {paymentMethod === 'momo' && (
+                        <div className="p-4 rounded-2xl bg-[#FFCC00]/5 border border-[#FFCC00]/20 space-y-2 animate-fade-in text-left">
+                          <label htmlFor="checkoutMomoNumber" className="block text-[10px] font-semibold text-[#003366]/70 uppercase tracking-wider">
+                            MTN Mobile Money Number
                           </label>
                           <input
-                            type="text"
+                            type="tel"
+                            id="checkoutMomoNumber"
                             required
-                            className="w-full px-3 py-2 rounded-xl border border-emerald-900/10 focus:border-primary outline-none text-xs"
-                            placeholder="MM/YY"
+                            value={momoNumber}
+                            onChange={(e) => setMomoNumber(e.target.value)}
+                            placeholder="e.g. 078XXXXXXX"
+                            className="w-full px-3 py-2 rounded-xl border border-[#FFCC00]/30 focus:border-[#FFCC00] focus:ring-1 focus:ring-[#FFCC00] outline-none text-xs bg-white"
                           />
+                          <p className="text-[9px] text-[#003366]/60 leading-relaxed font-light">
+                            You will receive a secure push notification prompt on your phone to input your MoMo PIN and approve the payment of <strong>${totalCost.toFixed(2)}</strong>.
+                          </p>
                         </div>
-                        <div>
-                          <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider mb-1">
-                            CVV
+                      )}
+
+                      {paymentMethod === 'airtel' && (
+                        <div className="p-4 rounded-2xl bg-[#E31837]/5 border border-[#E31837]/20 space-y-2 animate-fade-in text-left">
+                          <label htmlFor="checkoutAirtelNumber" className="block text-[10px] font-semibold text-[#E31837]/70 uppercase tracking-wider">
+                            Airtel Money Number
                           </label>
                           <input
-                            type="text"
+                            type="tel"
+                            id="checkoutAirtelNumber"
                             required
-                            className="w-full px-3 py-2 rounded-xl border border-emerald-900/10 focus:border-primary outline-none text-xs"
-                            placeholder="123"
+                            value={airtelNumber}
+                            onChange={(e) => setAirtelNumber(e.target.value)}
+                            placeholder="e.g. 073XXXXXXX"
+                            className="w-full px-3 py-2 rounded-xl border border-[#E31837]/30 focus:border-[#E31837] focus:ring-1 focus:ring-[#E31837] outline-none text-xs bg-white"
                           />
+                          <p className="text-[9px] text-[#E31837]/60 leading-relaxed font-light">
+                            You will receive a secure push notification prompt on your phone to input your Airtel PIN and approve the payment of <strong>${totalCost.toFixed(2)}</strong>.
+                          </p>
                         </div>
-                      </div>
+                      )}
+
+                      {paymentMethod === 'card' && (
+                        <div className="space-y-3 p-4 rounded-2xl bg-emerald-50/20 border border-emerald-950/5 animate-fade-in text-left">
+                          <div>
+                            <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider mb-1">
+                              Card Details
+                            </label>
+                            <div className="relative">
+                              <input
+                                type="text"
+                                required
+                                className="w-full pl-9 pr-3 py-2 rounded-xl border border-emerald-900/10 focus:border-primary outline-none text-xs bg-white"
+                                placeholder="4111 2222 3333 4444"
+                              />
+                              <CreditCard className="absolute left-3 top-2.5 w-3.5 h-3.5 text-emerald-900/30" />
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider mb-1">
+                                Expiry Date
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                className="w-full px-3 py-2 rounded-xl border border-emerald-900/10 focus:border-primary outline-none text-xs bg-white"
+                                placeholder="MM/YY"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] font-semibold text-emerald-900/50 uppercase tracking-wider mb-1">
+                                CVV
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                className="w-full px-3 py-2 rounded-xl border border-emerald-900/10 focus:border-primary outline-none text-xs bg-white"
+                                placeholder="123"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full mt-6 py-3 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+                      className="w-full mt-6 py-3 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer focus:outline-none"
                     >
                       Pay ${totalCost.toFixed(2)} <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                     <button
                       type="button"
                       onClick={() => setCheckoutStep('cart')}
-                      className="w-full py-2.5 rounded-xl border border-emerald-900/10 text-emerald-900/70 hover:bg-emerald-50 text-xs font-semibold transition-colors"
+                      className="w-full py-2.5 rounded-xl border border-emerald-900/10 text-emerald-900/70 hover:bg-emerald-50 text-xs font-semibold transition-colors cursor-pointer"
                     >
                       Back to Cart
                     </button>

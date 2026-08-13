@@ -4,11 +4,10 @@ import { ArrowRight, Sparkles, Leaf, Sprout, Flower2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 interface HeroProps {
-  onOpenBooking: () => void;
   onExploreShop: () => void;
 }
 
-export default function Hero({ onOpenBooking, onExploreShop }: HeroProps) {
+export default function Hero({ onExploreShop }: HeroProps) {
   const { t } = useLanguage();
 
   const handleScrollToShop = (e: React.MouseEvent) => {
@@ -88,12 +87,6 @@ export default function Hero({ onOpenBooking, onExploreShop }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex flex-wrap gap-4 pt-2"
           >
-            <button
-              onClick={onOpenBooking}
-              className="px-7 py-4 rounded-2xl bg-accent hover:bg-accent-light text-primary font-bold text-sm tracking-wide transition-all shadow-lg shadow-accent/15 hover:shadow-xl hover:translate-y-[-2px] active:translate-y-[1px] cursor-pointer"
-            >
-              {t('nav.book')}
-            </button>
             <a
               href="#shop"
               onClick={handleScrollToShop}

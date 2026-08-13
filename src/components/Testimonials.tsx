@@ -9,7 +9,7 @@ const TESTIMONIALS = [
     role: 'Event Director',
     company: 'Elegant Events',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80',
-    quote: "Kundabo's bespoke floral arrangements transformed our grand ballroom into a botanical dream. Guests were absolutely spellbound by the fresh pastel palettes!",
+    quote: "Kigali Bouqs' bespoke floral arrangements transformed our grand ballroom into a botanical dream. Guests were absolutely spellbound by the fresh pastel palettes!",
     type: 'logo',
     logoBg: 'bg-emerald-800',
     logoText: 'ELEGANT EVENTS',
@@ -18,7 +18,7 @@ const TESTIMONIALS = [
   {
     id: 1,
     name: 'You',
-    role: 'Kundabo Customer',
+    role: 'Kigali Bouqs Customer',
     company: 'Your Space',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80',
     quote: 'you are the next to post your feedback here ',

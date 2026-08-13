@@ -1,1 +1,162 @@
-/* App.css is intentionally left empty for Tailwind utility-first styling. */
+/* Kigali Bouqs mobile shell: translucent botanical glass, top branding, icon-only dock, and deliberate scroll-aware motion. */
+
+.mobile-top-brand {
+  position: fixed;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(135deg, rgba(7, 63, 47, 0.86), rgba(10, 46, 39, 0.72));
+  box-shadow: 0 0.8rem 2rem rgba(4, 29, 22, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+}
+
+.mobile-top-brand__link,
+.mobile-top-brand__cart {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mobile-top-brand__link {
+  gap: 0.55rem;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.mobile-top-brand__logo {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.mobile-top-brand__cart {
+  position: relative;
+  min-width: 2.35rem;
+  min-height: 2.35rem;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(236, 253, 245, 0.85);
+}
+
+.mobile-bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  width: calc(100% - 1.5rem);
+  max-width: 30rem;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.15rem;
+  padding: 0.4rem 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1.35rem;
+  background: linear-gradient(135deg, rgba(7, 63, 47, 0.8), rgba(10, 46, 39, 0.68));
+  box-shadow: 0 1.25rem 2.5rem rgba(4, 29, 22, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  transform: translateX(-50%);
+  transition: transform 280ms ease, opacity 220ms ease;
+}
+
+.mobile-bottom-nav--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-bottom-nav--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, calc(100% + 1.5rem));
+}
+
+.mobile-bottom-nav__item {
+  position: relative;
+  display: inline-flex;
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+  color: rgba(236, 253, 245, 0.7);
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.mobile-bottom-nav__item:hover,
+.mobile-bottom-nav__item:focus-visible,
+.mobile-bottom-nav__item--active {
+  color: #f9c52b;
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.mobile-bottom-nav__item:active {
+  transform: scale(0.92);
+}
+
+.mobile-cart-badge {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  display: flex;
+  width: 0.95rem;
+  height: 0.95rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #f9c52b;
+  color: #06382a;
+  font-size: 0.55rem;
+  font-weight: 800;
+}
+
+.mobile-back-to-top {
+  position: fixed;
+  right: 1.1rem;
+  z-index: 61;
+  display: inline-flex;
+  width: 2.9rem;
+  height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(7, 63, 47, 0.78);
+  color: #f9c52b;
+  box-shadow: 0 0.8rem 2rem rgba(4, 29, 22, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  backdrop-filter: blur(22px) saturate(1.5);
+  transition: bottom 240ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.mobile-back-to-top--nav-visible {
+  bottom: calc(5.35rem + env(safe-area-inset-bottom));
+}
+
+.mobile-back-to-top--nav-hidden {
+  bottom: calc(1.1rem + env(safe-area-inset-bottom));
+}
+
+.mobile-back-to-top:hover,
+.mobile-back-to-top:focus-visible {
+  background: rgba(14, 91, 66, 0.9);
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .mobile-top-brand,
+  .mobile-bottom-nav,
+  .mobile-back-to-top {
+    display: none;
+  }
+}

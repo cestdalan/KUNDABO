@@ -1,13 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Flower2, Lightbulb, Sprout, ArrowUpRight } from 'lucide-react';
+import { Layers, Flower2, Lightbulb, Sprout } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-interface ServicesProps {
-  onOpenBooking: () => void;
-}
-
-export default function Services({ onOpenBooking }: ServicesProps) {
+export default function Services() {
   const { t } = useLanguage();
 
   const servicesList = [
@@ -95,33 +91,11 @@ export default function Services({ onOpenBooking }: ServicesProps) {
                   </div>
                 </div>
 
-                {/* Card CTA Trigger */}
-                <div className="pt-6 relative z-10">
-                  <button
-                    onClick={onOpenBooking}
-                    className="flex items-center gap-1.5 text-xs font-bold text-secondary group-hover:text-primary transition-colors focus:outline-none"
-                  >
-                    <span>{t('services.learnMore')}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-[-0.5px]" />
-                  </button>
-                </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Section Footer CTA */}
-        <div className="mt-16 text-center">
-          <p className="text-xs sm:text-sm text-emerald-900/50">
-            Need custom event styling or regular planter service?{' '}
-            <button
-              onClick={onOpenBooking}
-              className="text-secondary font-bold hover:text-primary underline underline-offset-4 decoration-accent focus:outline-none"
-            >
-              Contact our floral laboratory
-            </button>
-          </p>
-        </div>
       </div>
     </section>
   );

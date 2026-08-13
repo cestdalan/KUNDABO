@@ -94,7 +94,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
               backgroundImage: 'url("/shop_header.jpg")',
               backgroundAttachment: 'fixed'
             }}
-            aria-label="Kundabo Shop Hero Banner"
+            aria-label="Kigali Bouqs Shop Hero Banner"
           />
           {/* Soft, rich gradient overlay using theme primary/green colors */}
           <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/80 to-primary/50" />
@@ -114,7 +114,7 @@ export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
               <span className="text-xs font-bold text-accent uppercase tracking-widest bg-white/10 border border-white/15 px-3 py-1.5 rounded-full inline-block backdrop-blur-md">
-                Kundabo Shop
+                Kigali Bouqs Shop
               </span>
               <h1 className="font-heading text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
                 Boutique Collection

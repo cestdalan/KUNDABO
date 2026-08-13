@@ -108,7 +108,7 @@ export default function ContactUs() {
               <div className="relative w-full rounded-[32px] overflow-hidden border border-white/50 shadow-xl shadow-emerald-950/10 flex aspect-[4/3] sm:aspect-[16/10] lg:aspect-square">
                 <img
                   src="/contact_pool.jpg"
-                  alt="Kundabo Flower Pool Kigali"
+                  alt="Kigali Bouqs Flower Pool Kigali"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
@@ -118,7 +118,7 @@ export default function ContactUs() {
                     Creative Landscaping
                   </span>
                   <h4 className="font-heading text-lg sm:text-xl font-bold text-emerald-950 leading-tight">
-                    design your garden with <span className="font-heading italic text-accent font-extrabold tracking-wide">kundabo</span>
+                    design your garden with <span className="font-heading italic text-accent font-extrabold tracking-wide">Kigali Bouqs</span>
                   </h4>
                   <p className="font-sans text-[11px] text-emerald-900/60 mt-1 font-light leading-relaxed">
                     Elevating outdoor and indoor spaces across Kigali with lush gardens, custom water pools, and premium botanical designs.

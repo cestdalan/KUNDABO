@@ -27,7 +27,7 @@ export default function Products({ onExploreShop, onProductClick }: ProductsProp
 
   const handleAddToCartClick = (product: ProductType, e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart(product, e);
+    addToCart(product);
     setAddedItems((prev) => ({ ...prev, [product.id]: true }));
     setTimeout(() => {
       setAddedItems((prev) => ({ ...prev, [product.id]: false }));
@@ -50,7 +50,7 @@ export default function Products({ onExploreShop, onProductClick }: ProductsProp
 
   return (
     <section id="shop" className="py-24 bg-transparent relative">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-12">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="text-left space-y-4 max-w-2xl">
@@ -100,30 +100,30 @@ export default function Products({ onExploreShop, onProductClick }: ProductsProp
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
           {sortedProducts.map((product) => (
             <div
               key={product.id}
               onClick={() => onProductClick && onProductClick(product)}
-              className="group relative flex flex-col justify-between rounded-3xl water-glass p-4 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5 cursor-pointer text-left"
+              className="group relative min-w-0 flex flex-col justify-between rounded-3xl water-glass p-2.5 sm:p-4 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-emerald-950/5 cursor-pointer text-left"
             >
               <div>
                 {/* Product Image Area */}
-                <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-4 bg-emerald-50">
+                <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-3 sm:mb-4 bg-emerald-50">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {product.tag && (
-                    <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-bold text-primary shadow-sm border border-emerald-900/5 uppercase tracking-wider">
+                    <span className="absolute top-2 left-2 sm:top-3.5 sm:left-3.5 px-2 sm:px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[9px] sm:text-[10px] font-bold text-primary shadow-sm border border-emerald-900/5 uppercase tracking-wider">
                       {product.tag}
                     </span>
                   )}
                 </div>
 
                 {/* Info */}
-                <div className="px-1.5 text-left space-y-1.5">
+                <div className="min-w-0 px-1 text-left space-y-1.5">
                   <div className="flex items-center justify-between text-[10px] uppercase font-bold tracking-widest text-emerald-900/40">
                     <span>{categoryTranslationMap[product.category] || product.category}</span>
                     <div className="flex items-center gap-0.5 text-amber-500 font-semibold">
@@ -131,23 +131,23 @@ export default function Products({ onExploreShop, onProductClick }: ProductsProp
                       <span>{product.rating}</span>
                     </div>
                   </div>
-                  <h3 className="font-sans text-sm md:text-base font-bold text-emerald-950 leading-tight group-hover:text-primary transition-colors min-h-[40px]">
+                  <h3 className="font-sans text-[13px] sm:text-sm md:text-base font-bold text-emerald-950 leading-tight group-hover:text-primary transition-colors min-h-[40px] break-words">
                     {product.name}
                   </h3>
                 </div>
               </div>
 
               {/* Purchase Bar with Full Width "Add to Cart" Button */}
-              <div className="mt-4 pt-3.5 border-t border-emerald-900/5 flex flex-col gap-2.5 px-1.5">
+              <div className="mt-3 sm:mt-4 pt-3 sm:pt-3.5 border-t border-emerald-900/5 flex flex-col gap-2.5 px-1">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-emerald-900/45 font-medium">Price</span>
-                  <span className="text-lg font-bold text-emerald-950">
+                  <span className="text-base sm:text-lg font-bold text-emerald-950">
                     ${product.price.toFixed(2)}
                   </span>
                 </div>
                 <button
                   onClick={(e) => handleAddToCartClick(product, e)}
-                  className={`w-full py-2.5 rounded-xl border flex items-center justify-center gap-1.5 transition-all text-xs font-bold cursor-pointer ${
+                  className={`w-full py-2.5 rounded-xl border flex items-center justify-center gap-1.5 transition-all text-[11px] sm:text-xs font-bold cursor-pointer ${
                     addedItems[product.id]
                       ? 'bg-secondary border-secondary text-white scale-95'
                       : 'bg-emerald-950 hover:bg-emerald-900 border-emerald-950 text-white hover:shadow-md'

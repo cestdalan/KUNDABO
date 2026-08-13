@@ -62,7 +62,7 @@ export default function Footer({ view = 'landing', setView }: FooterProps) {
           <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="block group w-max focus:outline-none">
             <img 
               src="/logo_transparent.png" 
-              alt="Kundabo" 
+              alt="Kigali Bouqs" 
               className="h-16 w-auto transition-transform group-hover:scale-[1.03] duration-300"
             />
           </a>
@@ -182,7 +182,7 @@ export default function Footer({ view = 'landing', setView }: FooterProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-16 pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-200/40 gap-4">
-        <p>© {new Date().getFullYear()} Kundabo. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Kigali Bouqs. All rights reserved.</p>
         <div className="flex gap-6">
           <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
           <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>

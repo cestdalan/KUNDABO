@@ -23,3 +23,4 @@
 - [x] Add standalone web-push subscriptions and background alert controls for trusted admin phones and PCs.
 - [ ] Subscribe an actual admin phone or PC, verify the pushSubscriptions record, and confirm a real background alert for an order or message.
 - [ ] Confirm the exact `manus.space` or custom publication domain in the project Domains settings before the storefront is published.
+- [x] Add secure administrator-only deletion controls for individual orders and customer messages.

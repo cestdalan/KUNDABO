@@ -182,8 +182,23 @@ export async function listOrders() {
   return db.select().from(orders).orderBy(desc(orders.createdAt));
 }
 
+export async function deleteOrder(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is unavailable");
+  await db.transaction(async (tx) => {
+    await tx.delete(orderItems).where(eq(orderItems.orderId, id));
+    await tx.delete(orders).where(eq(orders.id, id));
+  });
+}
+
 export async function listContactMessages() {
   const db = await getDb();
   if (!db) throw new Error("Database is unavailable");
   return db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
+}
+
+export async function deleteContactMessage(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is unavailable");
+  await db.delete(contactMessages).where(eq(contactMessages.id, id));
 }

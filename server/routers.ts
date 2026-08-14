@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { COOKIE_NAME } from "@shared/const";
-import { createContactMessage, createOrder, deleteProduct, listAdminCatalog, listCatalog, listContactMessages, listOrders, upsertProduct } from "./commerce";
+import { createContactMessage, createOrder, deleteContactMessage, deleteOrder, deleteProduct, listAdminCatalog, listCatalog, listContactMessages, listOrders, upsertProduct } from "./commerce";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
@@ -108,9 +108,11 @@ export const appRouter = router({
     }),
     orders: router({
       list: adminKeyProcedure.query(() => listOrders()),
+      remove: adminKeyProcedure.input(z.object({ id: z.number().int().positive() })).mutation(({ input }) => deleteOrder(input.id)),
     }),
     contacts: router({
       list: adminKeyProcedure.query(() => listContactMessages()),
+      remove: adminKeyProcedure.input(z.object({ id: z.number().int().positive() })).mutation(({ input }) => deleteContactMessage(input.id)),
     }),
     push: router({
       publicConfig: adminKeyProcedure.query(() => ({ publicKey: getAdminPushPublicKey() })),

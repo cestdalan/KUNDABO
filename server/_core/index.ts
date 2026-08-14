@@ -35,7 +35,8 @@ async function startServer() {
     const origin = req.headers.origin;
     const configuredOrigins = (process.env.ADMIN_APP_ORIGIN ?? "").split(",").map((entry) => entry.trim()).filter(Boolean);
     const isManagedPreview = typeof origin === "string" && /\.manus\.computer$/.test(new URL(origin).hostname);
-    if (origin && (configuredOrigins.includes(origin) || isManagedPreview)) {
+    const isManagedPublication = typeof origin === "string" && /\.manus\.space$/.test(new URL(origin).hostname);
+    if (origin && (configuredOrigins.includes(origin) || isManagedPreview || isManagedPublication)) {
       res.header("Access-Control-Allow-Origin", origin);
       res.header("Vary", "Origin");
       res.header("Access-Control-Allow-Headers", "Content-Type, x-kigali-admin-key");

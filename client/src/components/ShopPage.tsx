@@ -1,0 +1,288 @@
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, SlidersHorizontal, ShoppingCart, Check, ArrowLeft } from 'lucide-react';
+import { useCart } from '../context/CartContext';
+import { useCatalog } from '../context/CatalogContext';
+import { formatRwf } from '../lib/currency';
+
+interface ShopPageProps {
+  onBackToHome: () => void;
+  onProductClick: (product: any) => void;
+}
+
+export default function ShopPage({ onBackToHome, onProductClick }: ShopPageProps) {
+  const { addToCart } = useCart();
+  const { products } = useCatalog();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedFlowerType, setSelectedFlowerType] = useState('All');
+  const [sortBy, setSortBy] = useState('featured');
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
+
+  const categories = ['All', 'Flowers', 'Plants', 'Vases', 'Tools'];
+
+  // Dynamically extract available flower types for flower tag selection
+  const flowerTypes = useMemo(() => {
+    const types = new Set<string>();
+    products.forEach(p => {
+      if (p.category === 'Flowers' || p.type === 'Orchids') {
+        types.add(p.type);
+      }
+    });
+    return ['All', ...Array.from(types)];
+  }, [products]);
+
+  const handleAddToCartClick = (product: any, e: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    addToCart(product);
+    setAddedItems((prev) => ({ ...prev, [product.id]: true }));
+    setTimeout(() => {
+      setAddedItems((prev) => ({ ...prev, [product.id]: false }));
+    }, 2000);
+  };
+
+  // Filter and sort items
+  const filteredProducts = useMemo(() => {
+    let result = [...products];
+
+    // Search query filter
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(p => 
+        p.name.toLowerCase().includes(q) || 
+        p.category.toLowerCase().includes(q) ||
+        p.type.toLowerCase().includes(q)
+      );
+    }
+
+    // Category filter
+    if (selectedCategory !== 'All') {
+      result = result.filter(p => p.category === selectedCategory);
+    }
+
+    // Flower type sub-filter
+    if (selectedFlowerType !== 'All') {
+      result = result.filter(p => p.type === selectedFlowerType);
+    }
+
+    // Sort sorting dropdown
+    if (sortBy === 'price-low') {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price-high') {
+      result.sort((a, b) => b.price - a.price);
+    }
+
+    return result;
+  }, [products, searchQuery, selectedCategory, selectedFlowerType, sortBy]);
+
+  return (
+    <div className="bg-brand-bg min-h-screen text-left pb-28">
+      {/* Shop Banner Top Section / Hero Section */}
+      <div className="relative min-h-[40vh] sm:min-h-[45vh] flex items-center justify-center overflow-hidden py-16 sm:py-24">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="w-full h-full bg-cover bg-center bg-no-repeat select-none animate-fade-in"
+            style={{ 
+              backgroundImage: 'url("/shop_header.jpg")',
+              backgroundAttachment: 'fixed'
+            }}
+            aria-label="Kigali Bouqs Shop Hero Banner"
+          />
+          {/* Soft, rich gradient overlay using theme primary/green colors */}
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/80 to-primary/50" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full space-y-6">
+          {/* Back navigation */}
+          <button
+            onClick={onBackToHome}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-light transition-colors focus:outline-none group cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            <span>Back to Home</span>
+          </button>
+
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest bg-white/10 border border-white/15 px-3 py-1.5 rounded-full inline-block backdrop-blur-md">
+                Kigali Bouqs Shop
+              </span>
+              <h1 className="font-heading text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Boutique Collection
+              </h1>
+              <p className="font-sans text-sm sm:text-base text-emerald-100/80 font-light max-w-xl">
+                Browse our fresh blooms, seasonal bouquets, handpicked houseplants, ceramic pots, and artisan garden decorations.
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-2.5 bg-white/10 border border-white/15 px-4 py-2.5 rounded-xl shadow-lg self-start md:self-auto min-w-[200px] backdrop-blur-md">
+              <SlidersHorizontal className="w-4 h-4 text-emerald-200" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="text-xs font-semibold text-white bg-transparent outline-none w-full cursor-pointer"
+              >
+                <option value="featured" className="text-emerald-950">Sort by: Featured</option>
+                <option value="price-low" className="text-emerald-950">Price: Low to High</option>
+                <option value="price-high" className="text-emerald-950">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12">
+
+        {/* Filter Controls (Search bar & Categories) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 items-start">
+          
+          {/* Search and High-level Categories */}
+          <div className="lg:col-span-12 flex flex-col md:flex-row gap-4 w-full">
+            {/* Search Bar */}
+            <div className="relative flex-1">
+              <input
+                type="text"
+                placeholder="Search flowers, plants, vases, tools..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white border border-emerald-900/5 shadow-sm text-sm font-sans focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-emerald-950 placeholder-emerald-900/30"
+              />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-900/30" />
+            </div>
+
+            {/* High-level Category Tabs */}
+            <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 no-scrollbar select-none">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    // Reset flower sub-type if we move out of Flowers
+                    if (cat !== 'Flowers' && cat !== 'All') {
+                      setSelectedFlowerType('All');
+                    }
+                  }}
+                  className={`px-5 py-3 rounded-2xl text-xs font-semibold tracking-wide whitespace-nowrap transition-all focus:outline-none cursor-pointer ${
+                    selectedCategory === cat
+                      ? 'bg-primary text-white shadow-md shadow-primary/10'
+                      : 'bg-white text-emerald-900/60 hover:text-primary border border-emerald-900/5 shadow-sm'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Flowers subcategories / "Types of Flowers" (Visible when category is All or Flowers) */}
+          {(selectedCategory === 'All' || selectedCategory === 'Flowers') && (
+            <div className="lg:col-span-12 bg-white/70 border border-emerald-900/5 rounded-3xl p-5 shadow-sm">
+              <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-widest mb-3">
+                Types of Flowers
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {flowerTypes.map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => setSelectedFlowerType(type)}
+                    className={`px-4 py-2 rounded-xl text-xs font-medium transition-all focus:outline-none cursor-pointer ${
+                      selectedFlowerType === type
+                        ? 'bg-secondary text-white shadow-sm'
+                        : 'bg-emerald-50 text-emerald-900/60 hover:bg-emerald-100'
+                    }`}
+                  >
+                    {type === 'All' ? 'All Flowers' : type}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Products Grid */}
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-20 bg-white border border-emerald-900/5 rounded-3xl shadow-sm">
+            <p className="text-emerald-950 font-bold text-lg">No products found</p>
+            <p className="text-emerald-900/50 text-sm mt-1">Try adjusting your search query or filters.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+            <AnimatePresence mode="popLayout">
+              {filteredProducts.map((product) => (
+                <motion.div
+                  layout
+                  key={product.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                  onClick={() => onProductClick && onProductClick(product)}
+                  className="group relative flex flex-col justify-between p-3 sm:p-4 rounded-3xl bg-white border border-emerald-900/5 shadow-sm hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px] cursor-pointer text-left"
+                >
+                  {/* Floating Tags */}
+                  <div className="absolute top-6 left-6 z-10 flex flex-col gap-1.5 items-start">
+                    <span className="px-3 py-1 rounded-full bg-emerald-950/70 backdrop-blur-md text-[9px] font-bold text-accent uppercase tracking-widest">
+                      {product.tag}
+                    </span>
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* Image Area */}
+                    <div className="relative aspect-square rounded-2xl overflow-hidden bg-emerald-50 border border-emerald-900/5">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+
+                    {/* Metadata & Title */}
+                    <div className="space-y-1.5 px-1 text-left">
+                      <span className="text-[9px] font-bold text-emerald-900/40 uppercase tracking-widest">
+                        {product.category}
+                      </span>
+                      <h3 className="font-sans text-sm font-bold text-emerald-950 leading-tight line-clamp-2 min-h-[40px]">
+                        {product.name}
+                      </h3>
+                      
+                    </div>
+                  </div>
+
+                  {/* Pricing & Add to Cart */}
+                  <div className="pt-3 border-t border-emerald-900/5 mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
+                    <span className="font-heading text-base sm:text-lg font-bold text-primary">
+                      {formatRwf(product.price)}
+                    </span>
+                    
+                    <button
+                      onClick={(e) => handleAddToCartClick(product, e)}
+                      className={`h-9 sm:h-10 px-3 sm:px-4 rounded-xl flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold transition-all focus:outline-none cursor-pointer w-full sm:w-auto ${
+                        addedItems[product.id]
+                          ? 'bg-accent/20 text-secondary'
+                          : 'bg-primary hover:bg-primary-hover text-white shadow-md shadow-primary/10 active:translate-y-[1px]'
+                      }`}
+                    >
+                      {addedItems[product.id] ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Added</span>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                          <span>Add to Cart</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

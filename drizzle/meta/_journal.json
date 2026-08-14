@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1786696365398,
+      "tag": "0000_talented_jack_power",
+      "breakpoints": true
+    }
+  ]
+}

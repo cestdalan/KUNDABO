@@ -17,3 +17,4 @@
 - [x] Verify an authenticated catalog mutation through the admin API without leaving test catalog data.
 - [x] Verify the authenticated catalog image-upload flow or document the runtime blocker.
 - [x] Make the isolated admin dashboard retain its trusted storefront connection on the same device without storing credentials in source control.
+- [x] Make the isolated Kigali Bouqs admin dashboard installable as a web app with manifest, icon, and offline shell support.

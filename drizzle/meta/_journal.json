@@ -8,6 +8,13 @@
       "when": 1786696365398,
       "tag": "0000_talented_jack_power",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1786707479050,
+      "tag": "0001_melodic_zarda",
+      "breakpoints": true
     }
   ]
 }

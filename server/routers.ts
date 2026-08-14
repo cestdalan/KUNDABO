@@ -7,6 +7,8 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { storagePut } from "./storage";
 import { sendEmailWhenConfigured } from "./emailBridge";
+import { announceNewMessage, announceNewOrder } from "./activityNotifications";
+import { getAdminPushPublicKey, upsertAdminPushSubscription } from "./webPush";
 
 const adminKeyProcedure = publicProcedure.use(async ({ ctx, next }) => {
   const suppliedKey = ctx.req.headers["x-kigali-admin-key"];
@@ -60,6 +62,7 @@ export const appRouter = router({
           text: `${input.name} (${input.email}${input.phone ? `, ${input.phone}` : ""}) wrote:\n\n${input.message}`,
         });
       }
+      await announceNewMessage({ name: input.name });
       return record;
     }),
   }),
@@ -83,6 +86,7 @@ export const appRouter = router({
           text: `${input.customerName} placed ${order.orderNumber} for RWF ${order.totalRwf.toLocaleString("en-RW")}.`,
         });
       }
+      await announceNewOrder({ orderNumber: order.orderNumber, customerName: input.customerName, totalRwf: order.totalRwf });
       return order;
     }),
   }),
@@ -107,6 +111,17 @@ export const appRouter = router({
     }),
     contacts: router({
       list: adminKeyProcedure.query(() => listContactMessages()),
+    }),
+    push: router({
+      publicConfig: adminKeyProcedure.query(() => ({ publicKey: getAdminPushPublicKey() })),
+      subscribe: adminKeyProcedure.input(z.object({
+        endpoint: z.string().url().max(4096),
+        keys: z.object({
+          p256dh: z.string().min(16).max(255),
+          auth: z.string().min(8).max(255),
+        }),
+        userAgent: z.string().max(512).optional(),
+      })).mutation(({ input }) => upsertAdminPushSubscription(input)),
     }),
   }),
 });

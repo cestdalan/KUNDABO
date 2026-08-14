@@ -18,3 +18,8 @@
 - [x] Verify the authenticated catalog image-upload flow or document the runtime blocker.
 - [x] Make the isolated admin dashboard retain its trusted storefront connection on the same device without storing credentials in source control.
 - [x] Make the isolated Kigali Bouqs admin dashboard installable as a web app with manifest, icon, and offline shell support.
+- [x] Add a Kigali Bouqs browser-tab logo and complete storefront production publication-readiness checks.
+- [x] Implement secure owner and browser-push notification infrastructure for new order and customer-message events.
+- [x] Add standalone web-push subscriptions and background alert controls for trusted admin phones and PCs.
+- [ ] Subscribe an actual admin phone or PC, verify the pushSubscriptions record, and confirm a real background alert for an order or message.
+- [ ] Confirm the exact `manus.space` or custom publication domain in the project Domains settings before the storefront is published.

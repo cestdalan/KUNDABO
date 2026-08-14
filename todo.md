@@ -24,5 +24,5 @@
 - [ ] Subscribe an actual admin phone or PC, verify the pushSubscriptions record, and confirm a real background alert for an order or message.
 - [ ] Confirm the exact `manus.space` or custom publication domain in the project Domains settings before the storefront is published.
 - [x] Add secure administrator-only deletion controls for individual orders and customer messages.
-- [ ] Commit all latest storefront and admin dashboard changes before separate publication.
-- [ ] Prepare the storefront and isolated admin dashboard for separate publication with a secure cross-origin connection.
+- [x] Commit all latest storefront and admin dashboard changes before separate publication.
+- [x] Prepare the storefront and isolated admin dashboard for separate publication with a secure cross-origin connection.
